@@ -4,6 +4,7 @@
 
 StateMachineClass::StateMachineClass()
 {
+	std::cout<<"made state class succesfully"<<std::endl;
 	mCurrentState = START_STATE;
 	// initialize legal moves
 	for(int i =0; i<LAST_STATE; i++)
@@ -15,8 +16,14 @@ StateMachineClass::StateMachineClass()
 	}
 	
 	// Define legal moves
+	mLegalMoves[START_STATE][WHITESPACE_CHAR] = START_STATE;
+
 	mLegalMoves[START_STATE][DIGIT_CHAR] = INTEGER_STATE;
 	mLegalMoves[INTEGER_STATE][DIGIT_CHAR] = INTEGER_STATE;
+
+	mLegalMoves[START_STATE][LETTER_CHAR] = IDENTIFIER_STATE;
+	mLegalMoves[IDENTIFIER_STATE][LETTER_CHAR] = IDENTIFIER_STATE;
+
 	//etc
 	
 	// Initialized corresponding token types
@@ -28,6 +35,7 @@ StateMachineClass::StateMachineClass()
 	// Reset end states
 	mCorrespondingTokenTypes[IDENTIFIER_STATE] = IDENTIFIER_TOKEN;	
 	mCorrespondingTokenTypes[INTEGER_STATE] = INTEGER_TOKEN;
+
 	// etc
 };
 

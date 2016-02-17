@@ -21,8 +21,9 @@ class StateMachineClass
 public:
 	StateMachineClass();
 	MachineState UpdateState(char currentCharacter, TokenType & correspondingTokenType);
-private:
 	MachineState mCurrentState;
+private:
+	
 	// Legal moves matrix
 	MachineState mLegalMoves[LAST_STATE][LAST_CHAR];
 	TokenType mCorrespondingTokenTypes[LAST_STATE];

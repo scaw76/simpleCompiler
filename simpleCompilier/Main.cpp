@@ -15,7 +15,7 @@ void testScannerClass()
 	TokenClass token;
 	while(token.GetTokenType() != ENDFILE_TOKEN)
 	{
-		scanner.GetNextToken();
+		token = scanner.GetNextToken();
 		std::cout<<token<<std::endl;
 	};
 

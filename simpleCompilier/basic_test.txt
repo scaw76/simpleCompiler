@@ -1,0 +1,6 @@
+void main()
+{
+	int sum;
+	sume = 35 + 400;
+	cout << sum;
+}

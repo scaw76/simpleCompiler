@@ -3,6 +3,7 @@
 #include "Scanner.h"
 #include "Token.h"
 #include "StateMachine.h"
+#include <string>
 
 
 
@@ -11,6 +12,7 @@ ScannerClass::ScannerClass(const std::string filename)
 {
 	if(!mFin){
 		std::cout<<"ScannerClass: Error opening file!"<<std::endl;
+		system("pause");
 		exit(0);
 	}
 };
@@ -21,13 +23,15 @@ ScannerClass::~ScannerClass(){
 TokenClass ScannerClass::GetNextToken()
 {
 	StateMachineClass myStateMachine;
+
 	MachineState state;
 	TokenType type;
 	std::string lexeme;
 	char c;
 	do
 	{
-		c = mFin.get();
+		c = mFin.get();	
+		std::cout<< c <<std::endl;
 		state = myStateMachine.UpdateState(c,type);
 		lexeme += c;
 	}
