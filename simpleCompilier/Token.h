@@ -36,7 +36,7 @@ public:
 	TokenClass(TokenType type, const std::string & lexeme);
 	TokenType GetTokenType() const;
 	std::string GetLexeme() const;
-	const std::string & GetTokenTypeName() const;
+	const std::string & GetTokenTypeName() const;	
 	void CheckReserved();
 private:
 	TokenType mType;

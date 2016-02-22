@@ -1,10 +1,11 @@
 #include <iostream>
 #include "StateMachine.h"
 #include "Token.h"
-
+#include "Debug.h"
 
 StateMachineClass::StateMachineClass()
 {
+	//MSG("Initializing StateMachinClass");
 	mCurrentState = START_STATE;
 	// initialize legal moves
 	for(int i =0; i<LAST_STATE; i++)
@@ -43,6 +44,51 @@ StateMachineClass::StateMachineClass()
 	mLegalMoves[ASSIGNMENT_STATE][ASSIGNMENT_CHAR] = EQUAL_STATE;
 
 	mLegalMoves[START_STATE][ENDFILE_CHAR] = ENDFILE_STATE;
+	
+	// /* */ 
+	/*
+	mLegalMoves[START_STATE][DIVIDE_CHAR] = DIVIDE_STATE;
+	mLegalMoves[DIVIDE_STATE][TIMES_CHAR] = BLOCKCOMMENT_STATE;
+
+	mLegalMoves[BLOCKCOMMENT_STATE][WHITESPACE_CHAR] = BLOCKCOMMENT_STATE;
+	mLegalMoves[BLOCKCOMMENT_STATE][LETTER_CHAR] = BLOCKCOMMENT_STATE;
+	mLegalMoves[BLOCKCOMMENT_STATE][DIGIT_CHAR] = BLOCKCOMMENT_STATE;
+	mLegalMoves[BLOCKCOMMENT_STATE][LPAREN_CHAR] = BLOCKCOMMENT_STATE;
+	mLegalMoves[BLOCKCOMMENT_STATE][RPAREN_CHAR] = BLOCKCOMMENT_STATE;
+	mLegalMoves[BLOCKCOMMENT_STATE][LCURLY_CHAR] = BLOCKCOMMENT_STATE;
+	mLegalMoves[BLOCKCOMMENT_STATE][RCURLY_CHAR] = BLOCKCOMMENT_STATE;
+	mLegalMoves[BLOCKCOMMENT_STATE][SEMICOLON_CHAR] = BLOCKCOMMENT_STATE;
+	mLegalMoves[BLOCKCOMMENT_STATE][MINUS_CHAR] = BLOCKCOMMENT_STATE;
+	mLegalMoves[BLOCKCOMMENT_STATE][PLUS_CHAR] = BLOCKCOMMENT_STATE;
+	mLegalMoves[BLOCKCOMMENT_STATE][LESS_CHAR] = BLOCKCOMMENT_STATE;
+	mLegalMoves[BLOCKCOMMENT_STATE][ASSIGNMENT_CHAR] = BLOCKCOMMENT_STATE;
+	mLegalMoves[BLOCKCOMMENT_STATE][NEWLINE_CHAR] = BLOCKCOMMENT_STATE;
+
+
+	mLegalMoves[BLOCKCOMMENT_STATE][TIMES_CHAR] = ENDBLOCKCOMMENT_STATE;
+	mLegalMoves[ENDBLOCKCOMMENT_STATE][DIVIDE_CHAR] = START_STATE;
+
+	// //
+	mLegalMoves[DIVIDE_STATE][DIVIDE_CHAR] = COMMENT_STATE;
+
+	mLegalMoves[COMMENT_STATE][WHITESPACE_CHAR] = COMMENT_STATE;
+	mLegalMoves[COMMENT_STATE][LETTER_CHAR] = COMMENT_STATE;
+	mLegalMoves[COMMENT_STATE][DIGIT_CHAR] = COMMENT_STATE;
+	mLegalMoves[COMMENT_STATE][LPAREN_CHAR] = COMMENT_STATE;
+	mLegalMoves[COMMENT_STATE][RPAREN_CHAR] = COMMENT_STATE;
+	mLegalMoves[COMMENT_STATE][LCURLY_CHAR] = COMMENT_STATE;
+	mLegalMoves[COMMENT_STATE][RCURLY_CHAR] = COMMENT_STATE;
+	mLegalMoves[COMMENT_STATE][SEMICOLON_CHAR] = COMMENT_STATE;
+	mLegalMoves[COMMENT_STATE][MINUS_CHAR] = COMMENT_STATE;
+	mLegalMoves[COMMENT_STATE][TIMES_CHAR] = COMMENT_STATE;
+	mLegalMoves[COMMENT_STATE][DIVIDE_CHAR] = COMMENT_STATE;
+	mLegalMoves[COMMENT_STATE][PLUS_CHAR] = COMMENT_STATE;
+	mLegalMoves[COMMENT_STATE][LESS_CHAR] = COMMENT_STATE;
+	mLegalMoves[COMMENT_STATE][ASSIGNMENT_CHAR] = COMMENT_STATE;
+	mLegalMoves[COMMENT_STATE][NEWLINE_CHAR] = COMMENT_STATE;
+
+	mLegalMoves[COMMENT_STATE][NEWLINE_CHAR] = START_STATE;
+	*/
 
 	//etc
 	
@@ -84,6 +130,10 @@ MachineState StateMachineClass::UpdateState(char currentCharacter, TokenType & c
 
 	if(isspace(currentCharacter))
 		charType = WHITESPACE_CHAR;	
+	if(currentCharacter=='\n'){
+		MSG("newline");
+		//charType = NEWLINE_CHAR;
+	}
 	if(isalpha(currentCharacter))
 		charType = LETTER_CHAR;	
 	if(isdigit(currentCharacter))
@@ -112,11 +162,12 @@ MachineState StateMachineClass::UpdateState(char currentCharacter, TokenType & c
 		charType = ASSIGNMENT_CHAR;
 	if(currentCharacter == EOF)
 		charType = ENDFILE_CHAR;
+
 	correspondingTokenType = mCorrespondingTokenTypes[mCurrentState];
 	
 	mCurrentState = mLegalMoves[mCurrentState][charType];
 
-	//std::cout<<correspondingTokenType<<" "<<mCurrentState<<std::endl;
+	//MSG(correspondingTokenType<<" "<<mCurrentState);
 
 	return mCurrentState;
 };

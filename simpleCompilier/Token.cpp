@@ -1,12 +1,15 @@
 #include "Token.h"
-
+#include "Debug.h"
 #include <iostream>
 #include <string>
 
 TokenClass::TokenClass()
-{};
+{
+	//MSG("Initializing empty TokenClass");
+};
 TokenClass::TokenClass(TokenType type, const std::string & lexeme)
 {
+	//MSG("Initializing TokenClass");
 	mType = type;
 	mLexeme = lexeme;
 };
@@ -46,14 +49,13 @@ void TokenClass::CheckReserved()
 	}
 };
 
-
 std::ostream & operator<<(std::ostream & out, const TokenClass & tc)
 {
 	TokenType type= tc.GetTokenType();
 	std::string name= tc.GetTokenTypeName();
 	std::string lexeme = tc.GetLexeme();
 
-	out<<type<<" "<<name<<" "<<lexeme;
+	out<<"Tokeyn: type: " <<type<<" name: "<<name<<" lexeme: "<<lexeme;
 
 	return out;
 };

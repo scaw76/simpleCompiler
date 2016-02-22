@@ -1,17 +1,18 @@
 #include <fstream>
 #include <iostream>
+#include <string>
 #include "Scanner.h"
 #include "Token.h"
 #include "StateMachine.h"
-#include <string>
-
+#include "Debug.h"
 
 
 ScannerClass::ScannerClass(const std::string filename)
-	:mFin(filename)
+	:mFin(filename),mLineNumber(1)
 {
+	MSG("Initializing ScannerClass object");
 	if(!mFin){
-		std::cout<<"ScannerClass: Error opening file!"<<std::endl;
+		ERROR("ScannerClass: Error opening file!");
 		system("pause");
 		exit(0);
 	}
@@ -20,6 +21,12 @@ ScannerClass::ScannerClass(const std::string filename)
 ScannerClass::~ScannerClass(){
 	mFin.close();
 };
+
+int ScannerClass::GetLineNumber()
+{
+	return mLineNumber;
+};
+
 TokenClass ScannerClass::GetNextToken()
 {
 	StateMachineClass myStateMachine;
@@ -30,25 +37,28 @@ TokenClass ScannerClass::GetNextToken()
 	char c;
 	do
 	{
-		c = mFin.get();	
-		//std::cout<< c <<std::endl;
+		c = mFin.get();
 		state = myStateMachine.UpdateState(c,type);
-		lexeme += c;
+		if( c=='\n'){
+			mLineNumber ++;
+			MSG("Linenumber: "<<mLineNumber);
+		};
+		lexeme += c;		
+		
 	}
 	while(state != CANTMOVE_STATE);
 	if(type == BAD_TOKEN)
 	{
-		std::cout<<"Bad token from character: "<< c <<std::endl;
+		ERROR("Bad token from character: "<< c );
 		system("pause");
 		exit(0);
-	}
+	};
 	// put c back
 	mFin.unget(); 
+	
 	// remove c from lexeme
 	lexeme = lexeme.substr(0, lexeme.size()-1); 
+
 	TokenClass token(type, lexeme);
 	return token;	
 };
-
-
-	
