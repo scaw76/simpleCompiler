@@ -4,8 +4,6 @@
 #include "Token.h"
 #include <fstream>
 
-
-
 class ScannerClass{
 
 public:

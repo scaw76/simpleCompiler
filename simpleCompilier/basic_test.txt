@@ -1,8 +1,8 @@
 void main()
 {
 /* 
-	TEST BLOCK COMMENTS
-*/
+	*test a block //comment*
+**/
 	int sum;
 	sum = 35 + 400;
 	cout << sum;

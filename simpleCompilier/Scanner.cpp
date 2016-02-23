@@ -39,11 +39,15 @@ TokenClass ScannerClass::GetNextToken()
 	{
 		c = mFin.get();
 		state = myStateMachine.UpdateState(c,type);
+		//MSG(state);
 		if( c=='\n'){
 			mLineNumber ++;
 			MSG("Linenumber: "<<mLineNumber);
 		};
-		lexeme += c;		
+		lexeme += c;
+		//clear lexeme if start state
+		if(state == START_STATE)
+			lexeme = "";
 		
 	}
 	while(state != CANTMOVE_STATE);
@@ -55,7 +59,8 @@ TokenClass ScannerClass::GetNextToken()
 	};
 	// put c back
 	mFin.unget(); 
-	
+	if(c == '\n')
+		mLineNumber --;
 	// remove c from lexeme
 	lexeme = lexeme.substr(0, lexeme.size()-1); 
 
