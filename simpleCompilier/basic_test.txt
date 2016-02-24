@@ -1,9 +1,32 @@
 void main()
 {
 /* 
-	*test a block //comment*
+	*
+	Test a block //comment*
 **/
+// tEST SINGLE // line comment */
+	// test +-*/
 	int sum;
 	sum = 35 + 400;
 	cout << sum;
+	int subtract;
+	subtract = 40-2;
+	int times;
+	times = 5*5;
+	int divide;
+	divide = 25/5;
+	// test <  > == <= >= !=
+	bool less;
+	less = 5 < 40;
+	bool greater;
+	greater = 40 > 5;
+	bool equal;
+	equal = 5==5;
+	bool lessequal;
+	lessequal = 5<=6;
+	bool greaterequal;
+	greaterequal = 6>=5;
+	bool notequal;
+	notequal = 5!=6;
+	
 }

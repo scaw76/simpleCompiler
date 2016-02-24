@@ -42,7 +42,7 @@ TokenClass ScannerClass::GetNextToken()
 		//MSG(state);
 		if( c=='\n'){
 			mLineNumber ++;
-			MSG("Linenumber: "<<mLineNumber);
+			//MSG("Linenumber: "<<mLineNumber);
 		};
 		lexeme += c;
 		//clear lexeme if start state
@@ -64,6 +64,6 @@ TokenClass ScannerClass::GetNextToken()
 	// remove c from lexeme
 	lexeme = lexeme.substr(0, lexeme.size()-1); 
 
-	TokenClass token(type, lexeme);
+	TokenClass token(type, lexeme, mLineNumber);
 	return token;	
 };

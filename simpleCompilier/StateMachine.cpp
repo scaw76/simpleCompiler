@@ -37,14 +37,23 @@ StateMachineClass::StateMachineClass()
 	mLegalMoves[START_STATE][DIVIDE_CHAR] = DIVIDE_STATE;
 	mLegalMoves[START_STATE][MINUS_CHAR] = MINUS_STATE;
 	mLegalMoves[START_STATE][PLUS_CHAR] = PLUS_STATE;
-	// < << <=
+	// < > <= >= << 
 	mLegalMoves[START_STATE][LESS_CHAR] = LESS_STATE;
-	mLegalMoves[LESS_STATE][LESS_CHAR] = INSERTION_STATE;
+	mLegalMoves[START_STATE][GREATER_CHAR] = GREATER_STATE;
+
 	mLegalMoves[LESS_STATE][ASSIGNMENT_CHAR] = LESSEQUAL_STATE;
-	// = ==
+	mLegalMoves[GREATER_STATE][ASSIGNMENT_CHAR] = GREATEREQUAL_STATE;
+	
+	mLegalMoves[LESS_STATE][LESS_CHAR] = INSERTION_STATE;
+	
+	// = == ! !=
 	mLegalMoves[START_STATE][ASSIGNMENT_CHAR] = ASSIGNMENT_STATE;
 	mLegalMoves[ASSIGNMENT_STATE][ASSIGNMENT_CHAR] = EQUAL_STATE;
+	
+	mLegalMoves[START_STATE][NEGATE_CHAR] = NEGATE_STATE;
+	mLegalMoves[NEGATE_STATE][ASSIGNMENT_CHAR] = NOTEQUAL_STATE;
 
+	// eof
 	mLegalMoves[START_STATE][ENDFILE_CHAR] = ENDFILE_STATE;
 	
 	// /* */ 
@@ -59,21 +68,19 @@ StateMachineClass::StateMachineClass()
 	mLegalMoves[START_STATE][DIVIDE_CHAR] = DIVIDE_STATE;
 	mLegalMoves[DIVIDE_STATE][TIMES_CHAR] = BLOCKCOMMENT_STATE;
 
-	mLegalMoves[BLOCKCOMMENT_STATE][TIMES_CHAR] = ENDBLOCKCOMMENT_STATE;
-	
+	mLegalMoves[BLOCKCOMMENT_STATE][TIMES_CHAR] = ENDBLOCKCOMMENT_STATE;	
+	mLegalMoves[ENDBLOCKCOMMENT_STATE][TIMES_CHAR] = ENDBLOCKCOMMENT_STATE;
 	mLegalMoves[ENDBLOCKCOMMENT_STATE][DIVIDE_CHAR] = START_STATE;
 
 	// //
-	/*
-	// Initialize all COMMENT_STATE and chars to BLOCKCOMMENT_STATE
+	
+	// Initialize all COMMENT_STATE and chars to COMMENT_STATE
 	for(int cc= 0; cc<LAST_CHAR; cc++)
 	{
 		mLegalMoves[COMMENT_STATE][cc] = COMMENT_STATE;
 	}
 	mLegalMoves[DIVIDE_STATE][DIVIDE_CHAR] = COMMENT_STATE;
-
 	mLegalMoves[COMMENT_STATE][NEWLINE_CHAR] = START_STATE;
-	*/
 
 	//etc
 	
@@ -99,11 +106,15 @@ StateMachineClass::StateMachineClass()
 	mCorrespondingTokenTypes[PLUS_STATE] = PLUS_TOKEN;
 
 	mCorrespondingTokenTypes[LESS_STATE] = LESS_TOKEN;
+	mCorrespondingTokenTypes[GREATER_STATE] = GREATER_TOKEN;
 	mCorrespondingTokenTypes[INSERTION_STATE] = INSERTION_TOKEN;
 	mCorrespondingTokenTypes[LESSEQUAL_STATE] = LESSEQUAL_TOKEN;	
-
+	mCorrespondingTokenTypes[GREATEREQUAL_STATE] = GREATEREQUAL_TOKEN;
 	mCorrespondingTokenTypes[ASSIGNMENT_STATE] = ASSIGNMENT_TOKEN;
 	mCorrespondingTokenTypes[EQUAL_STATE] = EQUAL_TOKEN;
+	mCorrespondingTokenTypes[NOTEQUAL_STATE] = NOTEQUAL_TOKEN;
+
+
 
 	mCorrespondingTokenTypes[ENDFILE_STATE] = ENDFILE_TOKEN;
 	// etc
@@ -141,8 +152,12 @@ MachineState StateMachineClass::UpdateState(char currentCharacter, TokenType & c
 		charType = PLUS_CHAR;
 	if(currentCharacter=='<')
 		charType = LESS_CHAR;
+	if(currentCharacter=='>')
+		charType = GREATER_CHAR;
 	if(currentCharacter=='=')
 		charType = ASSIGNMENT_CHAR;
+	if(currentCharacter=='!')
+		charType = NEGATE_CHAR;
 	if(currentCharacter == EOF)
 		charType = ENDFILE_CHAR;
 

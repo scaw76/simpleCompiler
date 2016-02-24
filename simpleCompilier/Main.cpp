@@ -8,7 +8,7 @@ void testTokenClass()
 	TEST("Print void token");
 	TokenType tt = VOID_TOKEN;
 	std::string lexeme = "void";
-	TokenClass tok1(tt, lexeme);
+	TokenClass tok1(tt, lexeme, 0);
 	MSG(tok1);
 };
 void testScannerClassWithBadInput()

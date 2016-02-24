@@ -7,11 +7,12 @@ TokenClass::TokenClass()
 {
 	//MSG("Initializing empty TokenClass");
 };
-TokenClass::TokenClass(TokenType type, const std::string & lexeme)
+TokenClass::TokenClass(TokenType type, const std::string & lexeme, int line)
 {
 	//MSG("Initializing TokenClass");
 	mType = type;
 	mLexeme = lexeme;
+	mLineNumber = line;
 };
 
 TokenType TokenClass::GetTokenType() const 
@@ -22,6 +23,10 @@ TokenType TokenClass::GetTokenType() const
 std::string TokenClass::GetLexeme() const
 {
 	return mLexeme;
+};
+int TokenClass::GetLineNumber() const
+{
+	return mLineNumber;
 };
 
 const std::string & TokenClass::GetTokenTypeName() const 
@@ -54,8 +59,9 @@ std::ostream & operator<<(std::ostream & out, const TokenClass & tc)
 	TokenType type= tc.GetTokenType();
 	std::string name= tc.GetTokenTypeName();
 	std::string lexeme = tc.GetLexeme();
+	int line = tc.GetLineNumber();
 
-	out<<"Tokeyn: type: " <<type<<" name: "<<name<<" lexeme: "<<lexeme;
+	out<<"Tokeyn: type: " <<type<<" name: "<<name<<" lexeme: "<<lexeme<<" LineNumber:"<<line;
 
 	return out;
 };
