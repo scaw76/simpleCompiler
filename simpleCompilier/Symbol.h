@@ -5,6 +5,7 @@
 
 class SymbolTableClass
 {
+	
 public:
 	SymbolTableClass();
 	bool Exists(std::string s);
@@ -14,12 +15,13 @@ public:
 	int GetIndex(std::string s);
 	int GetCount();
 
-std::struct Variable{
-	std::string mLabel;
-	int mValue;
-};
+
 private:
+	struct Variable{
+		std::string mLabel;
+		int mValue;
+	};
 	std::vector<Variable> mSymbolTable;
-}
+};
 
 #endif // _SYMBOL_H_
