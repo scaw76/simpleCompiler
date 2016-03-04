@@ -12,9 +12,9 @@ ScannerClass::ScannerClass(const std::string filename)
 {
 	MSG("Initializing ScannerClass object");
 	if(!mFin){
-		ERROR("ScannerClass: Error opening file!");
-		system("pause");
-		exit(0);
+	ERROR("ScannerClass: Error opening file!");
+	system("pause");
+	exit(0);
 	}
 };
 
