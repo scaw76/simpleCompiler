@@ -61,6 +61,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="Scanner.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Symbol.h" />
@@ -68,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="Scanner.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Symbol.cpp" />

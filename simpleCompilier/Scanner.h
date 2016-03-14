@@ -1,6 +1,6 @@
 #pragma once
-#ifndef SCANNER
-#define	SCANNER
+#ifndef _SCANNER_
+#define	_SCANNER_
 #include "Token.h"
 #include <fstream>
 
@@ -18,4 +18,4 @@ private:
 };
 
 
-#endif // SCANNER
+#endif // _SCANNER_
