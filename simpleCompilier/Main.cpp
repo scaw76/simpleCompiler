@@ -32,7 +32,7 @@ void testScannerClass()
 	while(token.GetTokenType() != ENDFILE_TOKEN)
 	{
 		token = scanner.GetNextToken();
-		MSG(token);
+		//MSG(token);
 	};
 	//testScannerClassWithBadInput();
 };
@@ -67,11 +67,20 @@ void testSymbolTable()
 	}
 }
 
+void testNodeClasses()
+{
+	x = new IntegerNode(20);
+	y = new IntegerNode(4);
+
+
+}
+
 int main()
 {
 	testTokenClass();
 	testScannerClass();	
 	testSymbolTable();
+	testNodeClasses();
 	system("pause");
 	return 0;
 };

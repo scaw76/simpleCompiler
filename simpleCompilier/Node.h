@@ -136,6 +136,58 @@ public:
 	PlusNode(ExpressionNode * rhs, ExpressionNode * lhs);
 	int Evaluate();
 };
-
-
+// Minus Node
+class MinusNode : BinaryOperatorNode{
+public:
+	MinusNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	int Evaluate();
+};
+// Times Node
+class TimesNode : BinaryOperatorNode{
+public:
+	TimesNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	int Evaluate();
+};
+// Divide Node 
+class DivideNode : BinaryOperatorNode{
+public:
+	DivideNode(ExpressionNode *rhs, ExpressionNode * lhs);
+	int Evaluate();
+};
+// Less Node
+class LessNode : BinaryOperatorNode{
+public:
+	LessNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	int Evaluate();
+};
+// Less Equal Node
+class LessEqualNode : BinaryOperatorNode{
+public:
+	LessEqualNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	int Evaluate();
+};
+// Greater Node
+class GreaterNode : BinaryOperatorNode{
+public:
+	GreaterNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	int Evaluate();
+};
+// Greater Equal Node
+class GreaterEqualNode : BinaryOperatorNode{
+public:
+	GreaterEqualNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	int Evaluate();
+};
+// Equal Node
+class EqualNode : BinaryOperatorNode{
+public:
+	EqualNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	int Evaluate();
+};
+// Not Equal Node
+class NotEqualNode : BinaryOperatorNode{
+public:
+	NotEqualNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	int Evaluate();
+};
 #endif //_NODE_H_
