@@ -2,6 +2,7 @@
 #include "Token.h"
 #include "Scanner.h"
 #include "Symbol.h"
+#include "Node.h"
 #include <iostream>
 
 /* Commented out tests are fail and quit tests*/
@@ -69,10 +70,58 @@ void testSymbolTable()
 
 void testNodeClasses()
 {
-	x = new IntegerNode(20);
-	y = new IntegerNode(4);
+	int r = 20;
+	int l = 4;
 
+	std::string label = "myLabel";
+	/*
+	BlockNode;
+	StatementGroupNode;
+	StatementNode;
+	DeclarationStatementNode;
+	AssignmentStatementNode;
+	CoutStatementNode;
+	*/
 
+	IntegerNode *rhs = new IntegerNode(r);
+	IntegerNode *lhs = new IntegerNode(l);
+	
+	PlusNode *pn =  new PlusNode(lhs, rhs);
+	MinusNode *mn = new MinusNode(lhs, rhs);
+	
+	TimesNode *tm = new TimesNode(lhs, rhs);
+	DivideNode *dn = new DivideNode(lhs, rhs);
+
+	LessNode *ln =  new LessNode(lhs, rhs);
+	LessEqualNode *len = new LessEqualNode(lhs, rhs);
+
+	GreaterNode *gn = new GreaterNode(lhs, rhs);
+	GreaterEqualNode *gen = new GreaterEqualNode(lhs, rhs);
+
+	EqualNode *en = new EqualNode(lhs,rhs);
+	NotEqualNode *nen = new NotEqualNode(lhs, rhs);
+
+	
+
+	SymbolTableClass *Table = new SymbolTableClass;
+
+	IdentifierNode *id = new IdentifierNode(label, Table);
+
+	CoutStatementNode *csn = new CoutStatementNode(rhs);
+	AssignmentStatementNode *asn = new AssignmentStatementNode(id, rhs);
+	DeclarationStatementNode *dsn = new DeclarationStatementNode(id);
+
+	StatementGroupNode * sg = new StatementGroupNode();	
+	sg->AddStatement(csn);
+	sg->AddStatement(asn);
+	sg->AddStatement(dsn);
+
+	BlockNode *bn = new BlockNode(sg);
+	ProgramNode * PN = new ProgramNode(bn);
+	
+	StartNode * sn = new StartNode(PN);
+	
+	delete sn;
 }
 
 int main()

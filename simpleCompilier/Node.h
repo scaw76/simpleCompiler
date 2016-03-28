@@ -22,12 +22,21 @@ class IdentifierNode;
 
 class BinaryOperatorNode;
 class PlusNode;
-
-
+class MinusNode;
+class TimesNode;
+class DivideNode;
+class LessNode;
+class LessEqualNode;
+class GreaterNode;
+class GreaterEqualNode;
+class EqualNode;
+class NotEqualNode;
 
 // Node base class
 class Node{
 public:
+	Node();
+	//virtual
 	~Node();
 };
 // Start Node
@@ -70,7 +79,7 @@ public:
 	~StatementNode();
 };
 // Declaration Statement Node
-class DeclarationStatementNode : StatementNode{
+class DeclarationStatementNode : public StatementNode{
 public:
 	DeclarationStatementNode(IdentifierNode * id);
 	~DeclarationStatementNode();
@@ -78,7 +87,7 @@ private:
 	IdentifierNode * mIdentifierNode;
 };
 // Assignment Statement Node
-class AssignmentStatementNode : StatementNode{
+class AssignmentStatementNode : public StatementNode{
 public:
 	AssignmentStatementNode(IdentifierNode * id, ExpressionNode *en);
 	~AssignmentStatementNode();
@@ -87,7 +96,7 @@ private:
 	ExpressionNode * mExpressionNode;
 };
 // Cout Statement Node
-class CoutStatementNode : StatementNode{
+class CoutStatementNode : public StatementNode{
 public:
 	CoutStatementNode(ExpressionNode * en);
 	~CoutStatementNode();
@@ -98,21 +107,24 @@ private:
 // Expression Node
 class ExpressionNode {
 public:
-	virtual int Evaluate() = 0;
+	ExpressionNode();
 	~ExpressionNode();
+	virtual int Evaluate() = 0;
 };
 // Integer Node
-class IntegerNode : ExpressionNode {
+class IntegerNode : public ExpressionNode {
 public:
 	IntegerNode(int i);
+	~IntegerNode();
 	int Evaluate();
 private:
 	int mInteger;
 };
 // Identifier Node /**** DOES NOT DESTROY POINTER
-class IdentifierNode : ExpressionNode{
+class IdentifierNode : public ExpressionNode{
 public:
 	IdentifierNode(std::string label, SymbolTableClass * st);
+	~IdentifierNode();
 	void DeclareVariable();
 	void SetValue(int v);
 	int GetIndex();
@@ -124,7 +136,7 @@ private:
 // Binary Operator Node
 class BinaryOperatorNode : public ExpressionNode{
 public:
-	BinaryOperatorNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	BinaryOperatorNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	~BinaryOperatorNode();
 protected:
 	ExpressionNode * mRight;
@@ -133,61 +145,62 @@ protected:
 // Plus Node
 class PlusNode : BinaryOperatorNode{
 public:
-	PlusNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	PlusNode(ExpressionNode * lhs, ExpressionNode * rhs);
+	~PlusNode();
 	int Evaluate();
 };
 // Minus Node
 class MinusNode : BinaryOperatorNode{
 public:
-	MinusNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	MinusNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Times Node
 class TimesNode : BinaryOperatorNode{
 public:
-	TimesNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	TimesNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Divide Node 
 class DivideNode : BinaryOperatorNode{
 public:
-	DivideNode(ExpressionNode *rhs, ExpressionNode * lhs);
+	DivideNode(ExpressionNode *lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Less Node
 class LessNode : BinaryOperatorNode{
 public:
-	LessNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	LessNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Less Equal Node
 class LessEqualNode : BinaryOperatorNode{
 public:
-	LessEqualNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	LessEqualNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Greater Node
 class GreaterNode : BinaryOperatorNode{
 public:
-	GreaterNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	GreaterNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Greater Equal Node
 class GreaterEqualNode : BinaryOperatorNode{
 public:
-	GreaterEqualNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	GreaterEqualNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Equal Node
 class EqualNode : BinaryOperatorNode{
 public:
-	EqualNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	EqualNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Not Equal Node
 class NotEqualNode : BinaryOperatorNode{
 public:
-	NotEqualNode(ExpressionNode * rhs, ExpressionNode * lhs);
+	NotEqualNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 #endif //_NODE_H_
