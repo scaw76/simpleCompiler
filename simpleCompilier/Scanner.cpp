@@ -67,3 +67,14 @@ TokenClass ScannerClass::GetNextToken()
 	TokenClass token(type, lexeme, mLineNumber);
 	return token;	
 };
+TokenClass ScannerClass::PeekNextToken()
+{
+	int line = mLineNumber;
+	long position = mFin.tellg();
+	TokenClass T = this->GetNextToken();
+	if(mFin.eof())
+		mFin.clear();
+	mLineNumber = line;
+	mFin.seekg(position);
+	return T;
+};

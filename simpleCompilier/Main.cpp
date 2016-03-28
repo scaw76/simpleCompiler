@@ -30,6 +30,8 @@ void testScannerClass()
 	TEST("ScannerClass with basic input.");
 	ScannerClass scanner("basic_test.txt");
 	TokenClass token;
+	TokenClass t = scanner.PeekNextToken();
+	MSG(t);
 	while(token.GetTokenType() != ENDFILE_TOKEN)
 	{
 		token = scanner.GetNextToken();

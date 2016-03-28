@@ -10,6 +10,7 @@ public:
 	ScannerClass(const std::string filename);
 	~ScannerClass();
 	TokenClass GetNextToken();
+	TokenClass PeekNextToken();
 	int GetLineNumber();
 
 private:
