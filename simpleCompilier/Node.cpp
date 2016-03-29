@@ -26,6 +26,7 @@ ProgramNode::~ProgramNode()
 };
 // Block Node
 BlockNode::BlockNode(StatementGroupNode * sg)
+	:StatementNode()
 {
 	mStatementGroupNode = sg;
 };

@@ -8,9 +8,10 @@
 class Node;
 class StartNode;
 class ProgramNode;
+class StatementNode;
 class BlockNode;
 class StatementGroupNode;
-class StatementNode;
+
 class DeclarationStatementNode;
 class AssignmentStatementNode;
 class CoutStatementNode;
@@ -55,8 +56,14 @@ public:
 private:
 	BlockNode * mBlockNode;
 };
+// Statement Node
+class StatementNode : Node{
+public:
+	StatementNode();
+	~StatementNode();
+};
 // Block Node
-class BlockNode : Node {
+class BlockNode : StatementNode {
 public:
 	BlockNode(StatementGroupNode * sg);
 	~BlockNode();
@@ -72,12 +79,7 @@ public:
 private:
 	std::vector<StatementNode*> mStatementNodes;
 };
-// Statement Node
-class StatementNode : Node{
-public:
-	StatementNode();
-	~StatementNode();
-};
+
 // Declaration Statement Node
 class DeclarationStatementNode : public StatementNode{
 public:
@@ -143,62 +145,62 @@ protected:
 	ExpressionNode * mLeft;
 };
 // Plus Node
-class PlusNode : BinaryOperatorNode{
+class PlusNode : public BinaryOperatorNode{
 public:
 	PlusNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	~PlusNode();
 	int Evaluate();
 };
 // Minus Node
-class MinusNode : BinaryOperatorNode{
+class MinusNode : public BinaryOperatorNode{
 public:
 	MinusNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Times Node
-class TimesNode : BinaryOperatorNode{
+class TimesNode : public BinaryOperatorNode{
 public:
 	TimesNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Divide Node 
-class DivideNode : BinaryOperatorNode{
+class DivideNode : public BinaryOperatorNode{
 public:
 	DivideNode(ExpressionNode *lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Less Node
-class LessNode : BinaryOperatorNode{
+class LessNode : public BinaryOperatorNode{
 public:
 	LessNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Less Equal Node
-class LessEqualNode : BinaryOperatorNode{
+class LessEqualNode : public BinaryOperatorNode{
 public:
 	LessEqualNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Greater Node
-class GreaterNode : BinaryOperatorNode{
+class GreaterNode : public BinaryOperatorNode{
 public:
 	GreaterNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Greater Equal Node
-class GreaterEqualNode : BinaryOperatorNode{
+class GreaterEqualNode : public BinaryOperatorNode{
 public:
 	GreaterEqualNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Equal Node
-class EqualNode : BinaryOperatorNode{
+class EqualNode : public BinaryOperatorNode{
 public:
 	EqualNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();
 };
 // Not Equal Node
-class NotEqualNode : BinaryOperatorNode{
+class NotEqualNode : public BinaryOperatorNode{
 public:
 	NotEqualNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	int Evaluate();

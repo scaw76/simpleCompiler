@@ -3,6 +3,7 @@
 #include "Scanner.h"
 #include "Symbol.h"
 #include "Node.h"
+#include "Parser.h"
 #include <iostream>
 
 /* Commented out tests are fail and quit tests*/
@@ -35,7 +36,7 @@ void testScannerClass()
 	while(token.GetTokenType() != ENDFILE_TOKEN)
 	{
 		token = scanner.GetNextToken();
-		//MSG(token);
+		MSG(token);
 	};
 	//testScannerClassWithBadInput();
 };
@@ -87,7 +88,7 @@ void testNodeClasses()
 
 	IntegerNode *rhs = new IntegerNode(r);
 	IntegerNode *lhs = new IntegerNode(l);
-	
+	/*
 	PlusNode *pn =  new PlusNode(lhs, rhs);
 	MinusNode *mn = new MinusNode(lhs, rhs);
 	
@@ -104,7 +105,7 @@ void testNodeClasses()
 	NotEqualNode *nen = new NotEqualNode(lhs, rhs);
 
 	
-
+	*/
 	SymbolTableClass *Table = new SymbolTableClass;
 
 	IdentifierNode *id = new IdentifierNode(label, Table);
@@ -124,7 +125,21 @@ void testNodeClasses()
 	StartNode * sn = new StartNode(PN);
 	
 	delete sn;
+	delete rhs;
+	delete lhs;
 }
+
+void TestParser()
+{
+	TEST("ParserClass with basic input.");
+	ScannerClass *Scanner = new ScannerClass("basic_test.txt");
+	SymbolTableClass *Table = new SymbolTableClass;
+
+	ParserClass Parser(Scanner,Table);
+	//StartNode * sn = 
+	Parser.Start();
+
+};
 
 int main()
 {
@@ -132,6 +147,7 @@ int main()
 	testScannerClass();	
 	testSymbolTable();
 	testNodeClasses();
+	TestParser();
 	system("pause");
 	return 0;
 };

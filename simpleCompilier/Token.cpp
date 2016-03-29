@@ -13,6 +13,7 @@ TokenClass::TokenClass(TokenType type, const std::string & lexeme, int line)
 	mType = type;
 	mLexeme = lexeme;
 	mLineNumber = line;
+	CheckReserved();
 };
 
 TokenType TokenClass::GetTokenType() const 
@@ -28,8 +29,15 @@ int TokenClass::GetLineNumber() const
 {
 	return mLineNumber;
 };
-
-const std::string & TokenClass::GetTokenTypeName() const 
+const std::string TokenClass::GetTypeString()
+{
+	return GetTokenTypeName();
+};
+const std::string TokenClass::GetTypeString(TokenType type)
+{
+	return gTokenTypeNames[type];
+};
+const std::string TokenClass::GetTokenTypeName() const 
 {
 	return gTokenTypeNames[mType];
 };

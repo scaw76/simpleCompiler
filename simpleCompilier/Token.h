@@ -37,7 +37,9 @@ public:
 	TokenType GetTokenType() const;
 	std::string GetLexeme() const;
 	int GetLineNumber() const;
-	const std::string & GetTokenTypeName() const;	
+	const std::string GetTypeString();
+	const std::string GetTypeString(TokenType type);
+	const std::string GetTokenTypeName() const;	
 	void CheckReserved();
 private:
 	TokenType mType;
