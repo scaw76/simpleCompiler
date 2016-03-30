@@ -36,37 +36,43 @@ class NotEqualNode;
 // Node base class
 class Node{
 public:
-	Node();
-	//virtual
+	Node();	
 	~Node();
+	virtual void Interpret() = 0;
 };
+
 // Start Node
 class StartNode : Node{
 public:
 	StartNode(ProgramNode * pn);
 	~StartNode();
+	void Interpret();
 private:
 	ProgramNode * mProgramNode;
 };
+
 // Program Node
 class ProgramNode : Node{
 public:
 	ProgramNode(BlockNode * bn);
 	~ProgramNode();
+	void Interpret();
 private:
 	BlockNode * mBlockNode;
 };
 // Statement Node
-class StatementNode : Node{
+class StatementNode : public Node{
 public:
 	StatementNode();
 	~StatementNode();
+	//virtual void Interpret();
 };
 // Block Node
 class BlockNode : StatementNode {
 public:
 	BlockNode(StatementGroupNode * sg);
 	~BlockNode();
+	void Interpret();
 private:
 	StatementGroupNode * mStatementGroupNode;
 };
@@ -76,6 +82,7 @@ public:
 	StatementGroupNode();
 	void AddStatement(StatementNode * sn);
 	~StatementGroupNode();
+	void Interpret();
 private:
 	std::vector<StatementNode*> mStatementNodes;
 };
@@ -85,6 +92,7 @@ class DeclarationStatementNode : public StatementNode{
 public:
 	DeclarationStatementNode(IdentifierNode * id);
 	~DeclarationStatementNode();
+	void Interpret();
 private:
 	IdentifierNode * mIdentifierNode;
 };
@@ -93,6 +101,7 @@ class AssignmentStatementNode : public StatementNode{
 public:
 	AssignmentStatementNode(IdentifierNode * id, ExpressionNode *en);
 	~AssignmentStatementNode();
+	void Interpret();
 private:
 	IdentifierNode * mIdentifierNode;
 	ExpressionNode * mExpressionNode;
@@ -102,6 +111,7 @@ class CoutStatementNode : public StatementNode{
 public:
 	CoutStatementNode(ExpressionNode * en);
 	~CoutStatementNode();
+	void Interpret();
 private:
 	ExpressionNode * mExpressionNode;
 };
@@ -109,8 +119,6 @@ private:
 // Expression Node
 class ExpressionNode {
 public:
-	ExpressionNode();
-	~ExpressionNode();
 	virtual int Evaluate() = 0;
 };
 // Integer Node
@@ -118,7 +126,7 @@ class IntegerNode : public ExpressionNode {
 public:
 	IntegerNode(int i);
 	~IntegerNode();
-	int Evaluate();
+	 int Evaluate();
 private:
 	int mInteger;
 };
@@ -130,7 +138,8 @@ public:
 	void DeclareVariable();
 	void SetValue(int v);
 	int GetIndex();
-	int Evaluate();
+	 int Evaluate();
+	std::string GetLabel();
 private:
 	std::string mLabel;
 	SymbolTableClass * mSymbolTable;
@@ -149,60 +158,60 @@ class PlusNode : public BinaryOperatorNode{
 public:
 	PlusNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	~PlusNode();
-	int Evaluate();
+	 int Evaluate();
 };
 // Minus Node
 class MinusNode : public BinaryOperatorNode{
 public:
 	MinusNode(ExpressionNode * lhs, ExpressionNode * rhs);
-	int Evaluate();
+	 int Evaluate();
 };
 // Times Node
 class TimesNode : public BinaryOperatorNode{
 public:
 	TimesNode(ExpressionNode * lhs, ExpressionNode * rhs);
-	int Evaluate();
+	 int Evaluate();
 };
 // Divide Node 
 class DivideNode : public BinaryOperatorNode{
 public:
 	DivideNode(ExpressionNode *lhs, ExpressionNode * rhs);
-	int Evaluate();
+	 int Evaluate();
 };
 // Less Node
 class LessNode : public BinaryOperatorNode{
 public:
 	LessNode(ExpressionNode * lhs, ExpressionNode * rhs);
-	int Evaluate();
+	 int Evaluate();
 };
 // Less Equal Node
 class LessEqualNode : public BinaryOperatorNode{
 public:
 	LessEqualNode(ExpressionNode * lhs, ExpressionNode * rhs);
-	int Evaluate();
+	 int Evaluate();
 };
 // Greater Node
 class GreaterNode : public BinaryOperatorNode{
 public:
 	GreaterNode(ExpressionNode * lhs, ExpressionNode * rhs);
-	int Evaluate();
+	 int Evaluate();
 };
 // Greater Equal Node
 class GreaterEqualNode : public BinaryOperatorNode{
 public:
 	GreaterEqualNode(ExpressionNode * lhs, ExpressionNode * rhs);
-	int Evaluate();
+	 int Evaluate();
 };
 // Equal Node
 class EqualNode : public BinaryOperatorNode{
 public:
 	EqualNode(ExpressionNode * lhs, ExpressionNode * rhs);
-	int Evaluate();
+	 int Evaluate();
 };
 // Not Equal Node
 class NotEqualNode : public BinaryOperatorNode{
 public:
 	NotEqualNode(ExpressionNode * lhs, ExpressionNode * rhs);
-	int Evaluate();
+	 int Evaluate();
 };
 #endif //_NODE_H_

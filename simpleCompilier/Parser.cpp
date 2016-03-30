@@ -97,14 +97,16 @@ CoutStatementNode * ParserClass::CoutStatement()
 {
 	Match(COUT_TOKEN);
 	Match(INSERTION_TOKEN);
-	ExpressionNode * ex = Expression();
+	ExpressionNode * ex = Expression();	
 	Match(SEMICOLON_TOKEN);
 	return new CoutStatementNode(ex);
 };
 IdentifierNode * ParserClass::Identifier()
 {
 	TokenClass token = Match(IDENTIFIER_TOKEN);
-	return new IdentifierNode(token.GetLexeme(),mSymbolTable);
+	IdentifierNode * id = new IdentifierNode(token.GetLexeme(),mSymbolTable);
+	MSG(id->GetLabel());
+	return id;
 };
 IntegerNode * ParserClass::Integer()
 {

@@ -42,22 +42,23 @@ void testScannerClass()
 };
 void testSymbolTable()
 {
-	SymbolTableClass Table;
+	SymbolTableClass *Table = new SymbolTableClass;
 	//bool t1 = Table.Exists("");
 	std::string e1 = "entry1";
 	std::string e2 = "babby";
-	bool t2 = Table.Exists(e1);
+	bool t2 = Table->Exists(e1);
 	
-	Table.AddEntry(e1);
-	Table.AddEntry(e2);
-	bool t3 = Table.Exists(e1);
-	Table.SetValue(e1, 5);
+	Table->AddEntry(e1);
+	Table->AddEntry(e2);
+	bool t3 = Table->Exists(e1);
+	Table->SetValue(e1, 5);
 	
 	//int t4 = Table.GetValue(e1);
-	int t5 = Table.GetValue(e1);
-	int t6 = Table.GetIndex(e2);
+
+	int t5 = Table->GetValue(e1);
+	int t6 = Table->GetIndex(e2);
 	
-	int t7 = Table.GetCount();
+	int t7 = Table->GetCount();
 	/*
 	MSG("0= "<<t2);
 	MSG("1= "<<t3);
@@ -65,6 +66,7 @@ void testSymbolTable()
 	MSG("1= "<<t6);
 	MSG("2= "<<t7);
 	*/
+	MSG(t5<<" "<<t6);
 	if(!t2 && t3 && (t5==5) && (t6 ==1)&& (t7 == 2))
 	{
 		MSG("Passed symbol table tests!");
@@ -148,7 +150,7 @@ void TestInterpreter(){
 	ParserClass Parser(Scanner,Table);
 	
 	StartNode * root = Parser.Start();
-	//root->Interpret();
+	root->Interpret();
 };
 int main()
 {
@@ -157,6 +159,7 @@ int main()
 	testSymbolTable();
 	testNodeClasses();
 	TestParser();
+	TestInterpreter();
 	system("pause");
 	return 0;
 };

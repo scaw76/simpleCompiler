@@ -29,6 +29,7 @@ void SymbolTableClass::AddEntry(std::string s)
 	Variable v;
 	v.mLabel = s;
 	mSymbolTable.push_back(v);
+	MSG("Symbol "<<s<<" added to table");
 	
 };
 // get value from symbol in table
@@ -38,7 +39,8 @@ int SymbolTableClass::GetValue(std::string s)
 	{
 		if(s.compare(it->mLabel) == 0)
 		{
-			return it->mValue;
+			int x = it->mValue;
+			return x;
 		};
 	};
 	VaribleNonExistent();
