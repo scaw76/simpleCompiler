@@ -132,15 +132,24 @@ void testNodeClasses()
 void TestParser()
 {
 	TEST("ParserClass with basic input.");
-	ScannerClass *Scanner = new ScannerClass("basic_test.txt");
+	ScannerClass *Scanner = new ScannerClass("basic_test2.txt");
 	SymbolTableClass *Table = new SymbolTableClass;
 
 	ParserClass Parser(Scanner,Table);
-	//StartNode * sn = 
+	
 	Parser.Start();
 
 };
 
+void TestInterpreter(){
+	TEST("Intrepretre with basic input.");
+	ScannerClass *Scanner = new ScannerClass("basic_test.txt");
+	SymbolTableClass *Table = new SymbolTableClass;
+	ParserClass Parser(Scanner,Table);
+	
+	StartNode * root = Parser.Start();
+	//root->Interpret();
+};
 int main()
 {
 	testTokenClass();

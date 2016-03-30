@@ -17,8 +17,7 @@ StartNode * ParserClass::Start()
 	ProgramNode *p = Program();
 	Match(ENDFILE_TOKEN);
 	StartNode * n = new StartNode(p);
-	return n;
-	
+	return n;	
 };
 ProgramNode * ParserClass::Program()
 {
@@ -34,6 +33,7 @@ BlockNode * ParserClass::Block()
 	Match(LCURLY_TOKEN);
 	StatementGroupNode * s = StatementGroup();
 	Match(RCURLY_TOKEN);
+	Match(SEMICOLON_TOKEN);
 	BlockNode * b = new BlockNode(s);
 	return b;
 };
@@ -54,11 +54,11 @@ StatementNode * ParserClass::Statement()
 {
 	TokenClass currentToken = mScanner->PeekNextToken();
 	TokenType tt = currentToken.GetTokenType();
-	if(tt == INT_TOKEN)
+	if(tt == INT_TOKEN || tt == BOOL_TOKEN)
 	{
-		return DeclarationStatement();
+		return DeclarationStatement(tt);
 	}
-	else if(tt == IDENTIFIER_TOKEN)
+	else if(tt == IDENTIFIER_TOKEN )
 	{
 		return AssignmentStatement();
 	}
@@ -79,16 +79,24 @@ AssignmentStatementNode * ParserClass::AssignmentStatement()
 	return a;
 };
 
-DeclarationStatementNode* ParserClass::DeclarationStatement()
+DeclarationStatementNode* ParserClass::DeclarationStatement(TokenType tt)
 {
-	TokenClass token = Match(INT_TOKEN);
+	if(tt == INT_TOKEN)
+	{
+		TokenClass token = Match(INT_TOKEN);
+	}
+	else if( tt == BOOL_TOKEN)
+	{
+		TokenClass token = Match(BOOL_TOKEN);
+	}
 	IdentifierNode *id = Identifier();
 	Match(SEMICOLON_TOKEN);
 	return new DeclarationStatementNode(id);
 };
 CoutStatementNode * ParserClass::CoutStatement()
 {
-	TokenClass token = Match(INSERTION_TOKEN);
+	Match(COUT_TOKEN);
+	Match(INSERTION_TOKEN);
 	ExpressionNode * ex = Expression();
 	Match(SEMICOLON_TOKEN);
 	return new CoutStatementNode(ex);

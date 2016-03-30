@@ -60,6 +60,10 @@ void TokenClass::CheckReserved()
 	{
 		mType = COUT_TOKEN;
 	}
+	if(mLexeme.compare("bool")==0)
+	{
+		mType = BOOL_TOKEN;
+	}
 };
 
 std::ostream & operator<<(std::ostream & out, const TokenClass & tc)
