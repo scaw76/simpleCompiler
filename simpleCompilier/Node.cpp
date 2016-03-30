@@ -112,24 +112,17 @@ void AssignmentStatementNode::Interpret()
 {	
 	MSG("AssignmentStatementNode INTERPRET");
 	int e = mExpressionNode->Evaluate();
-	MSG(e);
+	//MSG(e);
 	mIdentifierNode->SetValue(e);
-	std::string y = mIdentifierNode->GetLabel();
-	MSG(y);
 	int x = mIdentifierNode->Evaluate();
-	MSG(x);
+	//MSG(x);
 };
-/*
+
 ExpressionNode::ExpressionNode()
 {};
-int ExpressionNode::sayhello()
-{
-	MSG("hello");
-	return 0;
-};
 ExpressionNode::~ExpressionNode()
 { MSG("de-contruct ExpressionNode"); };
-*/
+
 // Cout Statement Node
 CoutStatementNode::CoutStatementNode(ExpressionNode * en)
 	:StatementNode()
@@ -144,11 +137,8 @@ CoutStatementNode::~CoutStatementNode()
 void CoutStatementNode::Interpret()
 {	
 	MSG("CoutStatementNode INTERPRET");
-	MSG((mExpressionNode));
-	mExpressionNode->Evaluate();
 	int e = mExpressionNode->Evaluate();
-	MSG(e);
-	
+	//MSG(e);	
 };
 // Integer Node
 IntegerNode::IntegerNode(int i)
@@ -159,7 +149,7 @@ IntegerNode::IntegerNode(int i)
 IntegerNode::~IntegerNode(){ MSG("de-contruct IntegerNode"); };
 int IntegerNode::Evaluate()
 {
-	MSG("IntegerNode EVALUATE");
+	//MSG("IntegerNode EVALUATE");
 	return mInteger;
 };
 // Identifier Node
@@ -186,8 +176,9 @@ int IdentifierNode::GetIndex()
 };
  int IdentifierNode::Evaluate()
 {
-	MSG("IdentifierNode EVALUATE");
+	//MSG("IdentifierNode EVALUATE");
 	int x = mSymbolTable->GetValue(mLabel);
+	MSG(x);
 	return x;
 };
 std::string IdentifierNode::GetLabel()
@@ -216,9 +207,9 @@ PlusNode::~PlusNode()
 };
  int PlusNode::Evaluate()
 {
-	MSG("PlusNode EVALUATE");
 	int left = this->mLeft->Evaluate();
 	int right = this->mRight->Evaluate();
+	MSG(left <<" + " <<right);
 	return left + right;
 };
 // Minus Node
@@ -227,9 +218,9 @@ MinusNode::MinusNode(ExpressionNode * lhs, ExpressionNode * rhs)
 {};
  int MinusNode::Evaluate()
 {
-	MSG("MinusNode EVALUATE");
 	int left = this->mLeft->Evaluate();
 	int right = this->mRight->Evaluate();
+	MSG(left<< " - " <<right);
 	return left - right;
 };
 // Times Node
@@ -238,9 +229,9 @@ TimesNode::TimesNode(ExpressionNode * lhs, ExpressionNode * rhs)
 {};
  int TimesNode::Evaluate()
 {
-	MSG("TimesNode EVALUATE");
 	int left = this->mLeft->Evaluate();
 	int right = this->mRight->Evaluate();
+	MSG(left <<" * " <<right);
 	return left * right;
 };
 // Divide Node
@@ -249,10 +240,11 @@ DivideNode::DivideNode(ExpressionNode * lhs, ExpressionNode * rhs)
 {};
  int DivideNode::Evaluate()
 {
-	MSG("DivideNode EVALUATE");
 	int left = this->mLeft->Evaluate();
 	int right = this->mRight->Evaluate();
-	return left / right;
+	MSG(left <<" / " <<right);
+	return left/right;
+	
 };
 
 // Less Node
@@ -263,7 +255,8 @@ LessNode::LessNode(ExpressionNode * lhs, ExpressionNode * rhs)
 {
 	int left = this->mLeft->Evaluate();
 	int right = this->mRight->Evaluate();
-	return right < left;
+	MSG(left <<" < " <<right);
+	return left < right;
 };
 // Less Equal Node
 LessEqualNode::LessEqualNode(ExpressionNode * lhs, ExpressionNode * rhs)
@@ -273,6 +266,7 @@ LessEqualNode::LessEqualNode(ExpressionNode * lhs, ExpressionNode * rhs)
 {
 	int left = this->mLeft->Evaluate();
 	int right = this->mRight->Evaluate();
+	MSG(left <<" <= " <<right);
 	return left <= right;
 };
 // Greater Node
@@ -283,7 +277,8 @@ GreaterNode::GreaterNode(ExpressionNode * lhs, ExpressionNode * rhs)
 {
 	int left = this->mLeft->Evaluate();
 	int right = this->mRight->Evaluate();
-	return right > left;
+	MSG(left <<" > " <<right);
+	return left > right;
 };
 // Greater Equal Node
 GreaterEqualNode::GreaterEqualNode(ExpressionNode * lhs, ExpressionNode * rhs)
@@ -293,7 +288,8 @@ GreaterEqualNode::GreaterEqualNode(ExpressionNode * lhs, ExpressionNode * rhs)
 {
 	int left = this->mLeft->Evaluate();
 	int right = this->mRight->Evaluate();
-	return right >= left;
+	MSG(left<< " >= "<< right);
+	return left >= right;
 };
 // Equal Node
 EqualNode::EqualNode(ExpressionNode * lhs, ExpressionNode * rhs)
@@ -303,7 +299,8 @@ EqualNode::EqualNode(ExpressionNode * lhs, ExpressionNode * rhs)
 {
 	int left = this->mLeft->Evaluate();
 	int right = this->mRight->Evaluate();
-	return right == left;
+	MSG(left <<" == "<< right);
+	return left == right;
 };
 // Not Equal Node
 NotEqualNode::NotEqualNode(ExpressionNode * lhs, ExpressionNode * rhs)
@@ -313,5 +310,6 @@ NotEqualNode::NotEqualNode(ExpressionNode * lhs, ExpressionNode * rhs)
 {
 	int left = this->mLeft->Evaluate();
 	int right = this->mRight->Evaluate();
-	return right != left;
+	MSG(left <<" != "<< right);
+	return left != right;
 };

@@ -105,7 +105,7 @@ IdentifierNode * ParserClass::Identifier()
 {
 	TokenClass token = Match(IDENTIFIER_TOKEN);
 	IdentifierNode * id = new IdentifierNode(token.GetLexeme(),mSymbolTable);
-	MSG(id->GetLabel());
+	//MSG(id->GetLabel());
 	return id;
 };
 IntegerNode * ParserClass::Integer()
@@ -181,8 +181,9 @@ ExpressionNode * ParserClass::PlusMinus()
 		{
 			break;
 		}
-		return current;
+		
 	}
+	return current;
 };
 ExpressionNode * ParserClass::TimesDivide()
 {

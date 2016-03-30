@@ -8,6 +8,7 @@ class SymbolTableClass
 	
 public:
 	SymbolTableClass();
+	~SymbolTableClass();
 	bool Exists(std::string s);
 	void AddEntry(std::string s);
 	int GetValue(std::string s);

@@ -5,6 +5,8 @@
 
 SymbolTableClass::SymbolTableClass()
 {};
+SymbolTableClass::~SymbolTableClass()
+{};
 // does symbol exists
 bool SymbolTableClass::Exists(std::string s)
 {

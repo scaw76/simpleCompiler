@@ -91,7 +91,7 @@ void testNodeClasses()
 	IntegerNode *rhs = new IntegerNode(r);
 	IntegerNode *lhs = new IntegerNode(l);
 	/*
-	PlusNode *pn =  new PlusNode(lhs, rhs);
+	
 	MinusNode *mn = new MinusNode(lhs, rhs);
 	
 	TimesNode *tm = new TimesNode(lhs, rhs);
@@ -108,7 +108,26 @@ void testNodeClasses()
 
 	
 	*/
+	//IdendifierNode * sum = 
+	
+
+
 	SymbolTableClass *Table = new SymbolTableClass;
+	
+	IdentifierNode *sum = new IdentifierNode("sum", Table);
+	PlusNode *pn =  new PlusNode(lhs, rhs);
+
+	DeclarationStatementNode *dn = new DeclarationStatementNode(sum);
+
+	AssignmentStatementNode *an = new AssignmentStatementNode(sum,pn);
+
+	CoutStatementNode *cn = new CoutStatementNode(sum);
+
+	//ExpressionNode * ex = new IdentifierNode("sum", Table);
+
+	dn->Interpret();
+	an->Interpret();
+	cn->Interpret();
 
 	IdentifierNode *id = new IdentifierNode(label, Table);
 
@@ -127,8 +146,11 @@ void testNodeClasses()
 	StartNode * sn = new StartNode(PN);
 	
 	delete sn;
+	delete id;
 	delete rhs;
 	delete lhs;
+	//delete Table;
+
 }
 
 void TestParser()
@@ -140,12 +162,13 @@ void TestParser()
 	ParserClass Parser(Scanner,Table);
 	
 	Parser.Start();
-
+	//delete Scanner;
+	//delete Table;
 };
 
 void TestInterpreter(){
 	TEST("Intrepretre with basic input.");
-	ScannerClass *Scanner = new ScannerClass("basic_test.txt");
+	ScannerClass *Scanner = new ScannerClass("basic_test2.txt");
 	SymbolTableClass *Table = new SymbolTableClass;
 	ParserClass Parser(Scanner,Table);
 	

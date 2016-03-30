@@ -119,6 +119,8 @@ private:
 // Expression Node
 class ExpressionNode {
 public:
+	ExpressionNode();
+	~ExpressionNode();
 	virtual int Evaluate() = 0;
 };
 // Integer Node
