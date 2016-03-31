@@ -66,6 +66,14 @@ StatementNode * ParserClass::Statement()
 	{
 		return CoutStatement();
 	}
+	else if(tt == IF_TOKEN)
+	{
+		return IfStatement();
+	}
+	else if(tt == WHILE_TOKEN)
+	{
+		return WhileStatement();
+	}
 	return NULL;
 	
 };
@@ -101,6 +109,45 @@ CoutStatementNode * ParserClass::CoutStatement()
 	Match(SEMICOLON_TOKEN);
 	return new CoutStatementNode(ex);
 };
+IfStatementNode * ParserClass::IfStatement()
+{
+	Match(IF_TOKEN);
+	Match(LPAREN_TOKEN);
+	ExpressionNode * ex = Expression();	
+	Match(RPAREN_TOKEN);
+	TokenClass currentToken = mScanner->PeekNextToken();
+	TokenType tt = currentToken.GetTokenType();
+	if(tt==LCURLY_TOKEN)
+	{
+		Match(LCURLY_TOKEN);
+		StatementGroupNode * sg = StatementGroup();
+		Match(RCURLY_TOKEN);
+		return new IfStatementNode(ex, sg);
+	}
+	else
+	{
+		StatementGroupNode * sg = new StatementGroupNode();
+		sg->AddStatement(Statement());
+		return new IfStatementNode(ex, sg);
+	}
+	
+};
+WhileStatementNode * ParserClass::WhileStatement()
+{
+	Match(WHILE_TOKEN);
+	Match(LPAREN_TOKEN);
+	ExpressionNode * ex = Expression();	
+	Match(RPAREN_TOKEN);
+	TokenClass currentToken = mScanner->PeekNextToken();
+	TokenType tt = currentToken.GetTokenType();
+	
+	Match(LCURLY_TOKEN);
+	StatementGroupNode * sg = StatementGroup();
+	Match(RCURLY_TOKEN);
+	return new WhileStatementNode(ex, sg);
+	
+};
+
 IdentifierNode * ParserClass::Identifier()
 {
 	TokenClass token = Match(IDENTIFIER_TOKEN);

@@ -29,7 +29,8 @@ void testScannerClassWithBadInput()
 void testScannerClass()
 {
 	TEST("ScannerClass with basic input.");
-	ScannerClass scanner("basic_test.txt");
+	//ScannerClass scanner("basic_test.txt");
+	ScannerClass scanner("while_if_test.txt");
 	TokenClass token;
 	TokenClass t = scanner.PeekNextToken();
 	MSG(t);
@@ -156,7 +157,8 @@ void testNodeClasses()
 void TestParser()
 {
 	TEST("ParserClass with basic input.");
-	ScannerClass *Scanner = new ScannerClass("basic_test2.txt");
+	//ScannerClass *Scanner = new ScannerClass("basic_test2.txt");
+	ScannerClass *Scanner = new ScannerClass("while_if_test.txt");
 	SymbolTableClass *Table = new SymbolTableClass;
 
 	ParserClass Parser(Scanner,Table);
@@ -168,7 +170,8 @@ void TestParser()
 
 void TestInterpreter(){
 	TEST("Intrepretre with basic input.");
-	ScannerClass *Scanner = new ScannerClass("basic_test2.txt");
+	//ScannerClass *Scanner = new ScannerClass("basic_test2.txt");
+	ScannerClass *Scanner = new ScannerClass("while_if_test.txt");
 	SymbolTableClass *Table = new SymbolTableClass;
 	ParserClass Parser(Scanner,Table);
 	
@@ -177,12 +180,16 @@ void TestInterpreter(){
 };
 int main()
 {
+
 	testTokenClass();
+
 	testScannerClass();	
+	
 	testSymbolTable();
 	testNodeClasses();
 	TestParser();
 	TestInterpreter();
 	system("pause");
+	
 	return 0;
 };

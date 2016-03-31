@@ -64,6 +64,14 @@ void TokenClass::CheckReserved()
 	{
 		mType = BOOL_TOKEN;
 	}
+	if(mLexeme.compare("while")==0)
+	{
+		mType = WHILE_TOKEN;
+	}
+	if(mLexeme.compare("if")==0)
+	{
+		mType = IF_TOKEN;
+	}
 };
 
 std::ostream & operator<<(std::ostream & out, const TokenClass & tc)

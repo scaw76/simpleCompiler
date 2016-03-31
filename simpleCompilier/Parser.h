@@ -23,6 +23,8 @@ private:
 	DeclarationStatementNode* DeclarationStatement(TokenType tt);
 	AssignmentStatementNode * AssignmentStatement();
 	CoutStatementNode * CoutStatement();
+	IfStatementNode * IfStatement();
+	WhileStatementNode * WhileStatement();
 
 	ExpressionNode * Expression();
 	ExpressionNode * PlusMinus();

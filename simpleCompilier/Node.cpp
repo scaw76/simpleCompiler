@@ -140,6 +140,52 @@ void CoutStatementNode::Interpret()
 	int e = mExpressionNode->Evaluate();
 	//MSG(e);	
 };
+
+// If Statement Node
+IfStatementNode::IfStatementNode(ExpressionNode * en,  StatementGroupNode *sg)
+	:StatementNode()
+{
+	mExpressionNode = en;
+	mStatementGroupNode = sg;
+};
+IfStatementNode::~IfStatementNode()
+{
+	MSG("de-contruct IfStatementNode");
+	delete mExpressionNode;
+};
+void IfStatementNode::Interpret()
+{	
+	MSG("IfStatementNode INTERPRET");
+	int e = mExpressionNode->Evaluate();
+	MSG(e);
+	mStatementGroupNode->Interpret();
+		
+};
+
+// While Statement Node
+WhileStatementNode::WhileStatementNode(ExpressionNode * en, StatementGroupNode *sg)
+	:StatementNode()
+{
+	mExpressionNode = en;
+	mStatementGroupNode = sg;
+};
+WhileStatementNode::~WhileStatementNode()
+{
+	MSG("de-contruct IfStatementNode");
+	delete mExpressionNode;
+};
+void WhileStatementNode::Interpret()
+{	
+	MSG("WhileStatementNode INTERPRET");
+	int e = mExpressionNode->Evaluate();
+	while(e)
+	{
+		MSG(e);
+		mStatementGroupNode->Interpret();
+		e = mExpressionNode->Evaluate();
+	}
+		
+};
 // Integer Node
 IntegerNode::IntegerNode(int i)
 	:ExpressionNode()
