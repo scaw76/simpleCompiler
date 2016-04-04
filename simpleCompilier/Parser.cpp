@@ -12,6 +12,7 @@ ParserClass::~ParserClass()
 	delete mScanner;
 	delete mSymbolTable;
 };
+//<Start>-><Program>ENDFILE
 StartNode * ParserClass::Start()
 {
 	ProgramNode *p = Program();
@@ -19,6 +20,7 @@ StartNode * ParserClass::Start()
 	StartNode * n = new StartNode(p);
 	return n;	
 };
+//<Program>->VOID MAIN LPAREN RPAREN <Block>
 ProgramNode * ParserClass::Program()
 {
 	Match(VOID_TOKEN);
@@ -28,6 +30,7 @@ ProgramNode * ParserClass::Program()
 	BlockNode *b = Block();
 	return new ProgramNode(b);
 };
+//<Block>->LCURY <StatementGroup> RCURLY
 BlockNode * ParserClass::Block()
 {
 	Match(LCURLY_TOKEN);
@@ -37,6 +40,7 @@ BlockNode * ParserClass::Block()
 	BlockNode * b = new BlockNode(s);
 	return b;
 };
+//<StatementGroup>-> <List of Statements> || ""
 StatementGroupNode * ParserClass::StatementGroup()
 {
 	StatementGroupNode * sg = new StatementGroupNode();	
@@ -50,6 +54,9 @@ StatementGroupNode * ParserClass::StatementGroup()
 
 	return sg;
 };
+/*<Statement>->  "" || <DeclarationStatement> || <AssignmentStatement>
+					|| <CoutStatement> || <IfStatement> || <WhileStatement>
+*/
 StatementNode * ParserClass::Statement()
 {
 	TokenClass currentToken = mScanner->PeekNextToken();
@@ -77,6 +84,7 @@ StatementNode * ParserClass::Statement()
 	return NULL;
 	
 };
+//<AssignmentStatement>-> <Identifier> ASSIGNMENT <Expression> SEMICOLON
 AssignmentStatementNode * ParserClass::AssignmentStatement()
 {
 	IdentifierNode * id = Identifier();
@@ -86,7 +94,7 @@ AssignmentStatementNode * ParserClass::AssignmentStatement()
 	Match(SEMICOLON_TOKEN);
 	return a;
 };
-
+//<DeclarationStatement>-> INT <Identifier> SEMICOLON
 DeclarationStatementNode* ParserClass::DeclarationStatement(TokenType tt)
 {
 	if(tt == INT_TOKEN)
@@ -101,6 +109,7 @@ DeclarationStatementNode* ParserClass::DeclarationStatement(TokenType tt)
 	Match(SEMICOLON_TOKEN);
 	return new DeclarationStatementNode(id);
 };
+//<CoutStatement>-> COUT INSERTION <Expression> SEMICOLON
 CoutStatementNode * ParserClass::CoutStatement()
 {
 	Match(COUT_TOKEN);
@@ -109,6 +118,9 @@ CoutStatementNode * ParserClass::CoutStatement()
 	Match(SEMICOLON_TOKEN);
 	return new CoutStatementNode(ex);
 };
+/*<IfStatement>->	 IF LPAREN <Expression> RPAREN LCURLY <StatementGroup> RCURLY 
+				||	 IF LPAREN <Expression> RPAREN <Statement>  
+*/
 IfStatementNode * ParserClass::IfStatement()
 {
 	Match(IF_TOKEN);
@@ -132,6 +144,7 @@ IfStatementNode * ParserClass::IfStatement()
 	}
 	
 };
+//<WhileStatement>-> WHILE LPAREN <Expression> RPAREN LCURLY <StatementGroup> RCURLY 
 WhileStatementNode * ParserClass::WhileStatement()
 {
 	Match(WHILE_TOKEN);
@@ -147,7 +160,7 @@ WhileStatementNode * ParserClass::WhileStatement()
 	return new WhileStatementNode(ex, sg);
 	
 };
-
+//<Identifier>-> IDENTIFIER IdentifierNode
 IdentifierNode * ParserClass::Identifier()
 {
 	TokenClass token = Match(IDENTIFIER_TOKEN);
@@ -155,13 +168,14 @@ IdentifierNode * ParserClass::Identifier()
 	//MSG(id->GetLabel());
 	return id;
 };
+//<Integer>-> INTEGER IntegerNode
 IntegerNode * ParserClass::Integer()
 {
 	TokenClass token = Match(INTEGER_TOKEN);
 	return new IntegerNode(stoi(token.GetLexeme()));
 };
 
-
+// Match expected token to next token
 TokenClass ParserClass::Match(TokenType expectedType)
 {
 	TokenClass currentToken = mScanner->GetNextToken();
@@ -175,13 +189,50 @@ TokenClass ParserClass::Match(TokenType expectedType)
 	}
 
 	MSG("\tSuccessfully match Token Type: "<<
-		currentToken.GetTypeString()<<". Lexeme: \""<<
+		currentToken.GetTokenTypeName()<<". Lexeme: \""<<
 		currentToken.GetLexeme()<<"\"");
 
 	return currentToken;
 };
 
+//<Expression>-> <Or>
 ExpressionNode * ParserClass::Expression()
+{
+	ExpressionNode *  current = Or();
+	return current;
+};
+//<Or> -> <And> || OR <Expression>
+ExpressionNode * ParserClass::Or()
+{
+	ExpressionNode *  current = And();
+	TokenClass currentToken = mScanner->PeekNextToken();
+	TokenType tt = currentToken.GetTokenType();
+	if(tt == OR_TOKEN)
+	{
+		Match(OR_TOKEN);
+		current = new OrNode(current, Expression());
+	}
+	return current;
+};
+//<And> -> <Relational> || AND <Expression>
+ExpressionNode * ParserClass::And()
+{
+	ExpressionNode *  current = Relational();
+	TokenClass currentToken = mScanner->PeekNextToken();
+	TokenType tt = currentToken.GetTokenType();
+	if(tt == AND_TOKEN)
+	{
+		Match(AND_TOKEN);
+		current = new AndNode(current, Expression());
+	}
+	return current;
+};
+/*
+<Relational> ->  <PlusMinus>|| LessNode		|| LessEqualNode 
+							|| GreaterNode	|| GreaterEqualNode
+							|| EqualNode	|| NotEqualNode
+*/
+ExpressionNode * ParserClass::Relational()
 {
 	ExpressionNode *  current = PlusMinus();
 	TokenClass currentToken = mScanner->PeekNextToken();
@@ -209,6 +260,7 @@ ExpressionNode * ParserClass::Expression()
 	}
 	return current;
 };
+//<PlusMinus>-> <TimesDivide> || PlusNode || MinusNode
 ExpressionNode * ParserClass::PlusMinus()
 {
 	ExpressionNode * current = TimesDivide();
@@ -228,10 +280,10 @@ ExpressionNode * ParserClass::PlusMinus()
 		{
 			break;
 		}
-		
 	}
 	return current;
 };
+//<TimesDivide>-> <Factor> || TimesNode || DivideNode
 ExpressionNode * ParserClass::TimesDivide()
 {
 	ExpressionNode * current = Factor();
@@ -255,6 +307,7 @@ ExpressionNode * ParserClass::TimesDivide()
 	}
 	return current;
 };
+//<Factor>-> <Identifier> || <Integer> || LPAREN <Expression> RPAREN
 ExpressionNode *  ParserClass::Factor()
 {
 	TokenClass currentToken = mScanner->PeekNextToken();

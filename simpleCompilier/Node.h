@@ -24,6 +24,7 @@ class IntergerNode;
 class IdentifierNode;
 
 class BinaryOperatorNode;
+
 class PlusNode;
 class MinusNode;
 class TimesNode;
@@ -35,11 +36,12 @@ class GreaterEqualNode;
 class EqualNode;
 class NotEqualNode;
 
+class AndNode;
+class OrNode;
+
 // Node base class
 class Node{
 public:
-	Node();	
-	~Node();
 	virtual void Interpret() = 0;
 };
 
@@ -66,7 +68,7 @@ private:
 class StatementNode : public Node{
 public:
 	StatementNode();
-	~StatementNode();
+	virtual ~StatementNode();
 	//virtual void Interpret();
 };
 // Block Node
@@ -160,7 +162,7 @@ public:
 	void DeclareVariable();
 	void SetValue(int v);
 	int GetIndex();
-	 int Evaluate();
+	int Evaluate();
 	std::string GetLabel();
 private:
 	std::string mLabel;
@@ -234,6 +236,18 @@ public:
 class NotEqualNode : public BinaryOperatorNode{
 public:
 	NotEqualNode(ExpressionNode * lhs, ExpressionNode * rhs);
+	 int Evaluate();
+};
+// And Node
+class AndNode : public BinaryOperatorNode{
+public:
+	AndNode(ExpressionNode * lhs, ExpressionNode * rhs);
+	 int Evaluate();
+};
+// Or Node 
+class OrNode : public BinaryOperatorNode{
+public:
+	OrNode(ExpressionNode * lhs, ExpressionNode * rhs);
 	 int Evaluate();
 };
 #endif //_NODE_H_

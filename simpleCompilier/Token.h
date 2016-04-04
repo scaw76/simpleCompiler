@@ -6,13 +6,15 @@
 
 enum TokenType {
 	// Reserved Words:
-	VOID_TOKEN, MAIN_TOKEN, INT_TOKEN, COUT_TOKEN,BOOL_TOKEN, WHILE_TOKEN, IF_TOKEN,
+	VOID_TOKEN, MAIN_TOKEN, INT_TOKEN, COUT_TOKEN, BOOL_TOKEN, WHILE_TOKEN, IF_TOKEN,
 	// Relational Operators:
 	LESS_TOKEN, LESSEQUAL_TOKEN, GREATER_TOKEN, GREATEREQUAL_TOKEN,
 	EQUAL_TOKEN, NOTEQUAL_TOKEN,
 	// Other Operators:
 	INSERTION_TOKEN, ASSIGNMENT_TOKEN, PLUS_TOKEN, MINUS_TOKEN,
 	TIMES_TOKEN, DIVIDE_TOKEN,
+	// 
+	AND_TOKEN, OR_TOKEN,
 	// Other Charaters:
 	SEMICOLON_TOKEN, LPAREN_TOKEN, RPAREN_TOKEN, LCURLY_TOKEN, RCURLY_TOKEN,
 	// Other Token Types:
@@ -25,6 +27,7 @@ const std::string gTokenTypeNames[] = {
 	"VOID", "MAIN", "INT", "COUT","BOOL", "WHILE", "IF",
 	"LESS", "LESSEQUAL", "GREATER","GREATEREQUAL","EQUAL","NOTEQUAL",
 	"INSERTION","ASSIGNMENT","PLUS","MINUS","TIMES","DIVIDE",
+	"AND", "OR",
 	"SEMICOLON","LPAREN", "RPAREN","LCURLY","RCURLY",
 	"IDENTIFIER","INTEGER",
 	"BAD","ENDFILE"
@@ -40,8 +43,10 @@ public:
 	const std::string GetTypeString();
 	const std::string GetTypeString(TokenType type);
 	const std::string GetTokenTypeName() const;	
-	void CheckReserved();
+	
 private:
+	void CheckReserved();
+
 	TokenType mType;
 	std::string mLexeme;
 	int mLineNumber;

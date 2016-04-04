@@ -14,10 +14,9 @@ public:
 	int GetValue(std::string s);
 	void SetValue(std::string s, int v);
 	int GetIndex(std::string s);
-	int GetCount();
-
-	void VaribleNonExistent();
+	int GetCount();	
 private:
+	void VaribleNonExistent(std::string s);
 	struct Variable{
 		std::string mLabel;
 		int mValue;

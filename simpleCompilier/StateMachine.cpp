@@ -53,6 +53,27 @@ StateMachineClass::StateMachineClass()
 	mLegalMoves[START_STATE][NEGATE_CHAR] = NEGATE_STATE;
 	mLegalMoves[NEGATE_STATE][ASSIGNMENT_CHAR] = NOTEQUAL_STATE;
 
+	// && ||
+	mLegalMoves[START_STATE][AMPERSAND_CHAR] = AMPERSAND_STATE;
+	mLegalMoves[IDENTIFIER_STATE][AMPERSAND_CHAR] = AMPERSAND_STATE;
+	mLegalMoves[INTEGER_STATE][AMPERSAND_CHAR] = AMPERSAND_STATE;
+	mLegalMoves[RPAREN_STATE][AMPERSAND_CHAR] = AMPERSAND_STATE;
+	mLegalMoves[AMPERSAND_STATE][AMPERSAND_CHAR] = AND_STATE;
+
+	mLegalMoves[AND_STATE][LPAREN_CHAR] = LPAREN_STATE;
+	mLegalMoves[AND_STATE][DIGIT_CHAR] = INTEGER_STATE;
+	mLegalMoves[AND_STATE][LETTER_CHAR] = IDENTIFIER_STATE;
+
+	mLegalMoves[START_STATE][PIPE_CHAR] = PIPE_STATE;
+	mLegalMoves[IDENTIFIER_STATE][PIPE_CHAR] = PIPE_STATE;
+	mLegalMoves[INTEGER_STATE][PIPE_CHAR] = PIPE_STATE;
+	mLegalMoves[RPAREN_STATE][PIPE_CHAR] = PIPE_STATE;
+	mLegalMoves[PIPE_STATE][PIPE_CHAR] = OR_STATE;
+
+	mLegalMoves[OR_STATE][LPAREN_CHAR] = LPAREN_STATE;
+	mLegalMoves[OR_STATE][DIGIT_CHAR] = INTEGER_STATE;
+	mLegalMoves[OR_STATE][LETTER_CHAR] = IDENTIFIER_STATE;
+
 	// eof
 	mLegalMoves[START_STATE][ENDFILE_CHAR] = ENDFILE_STATE;
 	
@@ -68,7 +89,8 @@ StateMachineClass::StateMachineClass()
 	mLegalMoves[START_STATE][DIVIDE_CHAR] = DIVIDE_STATE;
 	mLegalMoves[DIVIDE_STATE][TIMES_CHAR] = BLOCKCOMMENT_STATE;
 
-	mLegalMoves[BLOCKCOMMENT_STATE][TIMES_CHAR] = ENDBLOCKCOMMENT_STATE;	
+	mLegalMoves[BLOCKCOMMENT_STATE][TIMES_CHAR] = ENDBLOCKCOMMENT_STATE;
+	mLegalMoves[BLOCKCOMMENT_STATE][ENDFILE_CHAR] = ENDFILE_STATE;
 	mLegalMoves[ENDBLOCKCOMMENT_STATE][TIMES_CHAR] = ENDBLOCKCOMMENT_STATE;
 	mLegalMoves[ENDBLOCKCOMMENT_STATE][DIVIDE_CHAR] = START_STATE;
 
@@ -81,6 +103,7 @@ StateMachineClass::StateMachineClass()
 	}
 	mLegalMoves[DIVIDE_STATE][DIVIDE_CHAR] = COMMENT_STATE;
 	mLegalMoves[COMMENT_STATE][NEWLINE_CHAR] = START_STATE;
+	mLegalMoves[COMMENT_STATE][ENDFILE_CHAR] = ENDFILE_STATE;
 
 	//etc
 	
@@ -114,7 +137,8 @@ StateMachineClass::StateMachineClass()
 	mCorrespondingTokenTypes[EQUAL_STATE] = EQUAL_TOKEN;
 	mCorrespondingTokenTypes[NOTEQUAL_STATE] = NOTEQUAL_TOKEN;
 
-
+	mCorrespondingTokenTypes[AND_STATE] = AND_TOKEN;
+	mCorrespondingTokenTypes[OR_STATE] = OR_TOKEN;
 
 	mCorrespondingTokenTypes[ENDFILE_STATE] = ENDFILE_TOKEN;
 	// etc
@@ -158,6 +182,10 @@ MachineState StateMachineClass::UpdateState(char currentCharacter, TokenType & c
 		charType = ASSIGNMENT_CHAR;
 	if(currentCharacter=='!')
 		charType = NEGATE_CHAR;
+	if(currentCharacter=='&')
+		charType = AMPERSAND_CHAR;
+	if(currentCharacter=='|')
+		charType = PIPE_CHAR;
 	if(currentCharacter == EOF)
 		charType = ENDFILE_CHAR;
 

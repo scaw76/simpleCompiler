@@ -31,8 +31,7 @@ void SymbolTableClass::AddEntry(std::string s)
 	Variable v;
 	v.mLabel = s;
 	mSymbolTable.push_back(v);
-	MSG("Symbol "<<s<<" added to table");
-	
+	//MSG("Symbol "<<s<<" added to table");	
 };
 // get value from symbol in table
 int SymbolTableClass::GetValue(std::string s)
@@ -45,7 +44,7 @@ int SymbolTableClass::GetValue(std::string s)
 			return x;
 		};
 	};
-	VaribleNonExistent();
+	VaribleNonExistent(s);
 };
 // set value for symbol in table
 void SymbolTableClass::SetValue(std::string s, int v)
@@ -58,7 +57,7 @@ void SymbolTableClass::SetValue(std::string s, int v)
 			return;
 		};
 	}
-	VaribleNonExistent();
+	VaribleNonExistent(s);
 };
 // get index of symbol in table
 int SymbolTableClass::GetIndex(std::string s)
@@ -79,10 +78,10 @@ int SymbolTableClass::GetCount()
 {
 	return mSymbolTable.size();
 }
-// if nonexistant symbol print message and quit
-void SymbolTableClass::VaribleNonExistent()
+// nonexistant symbol print message and quit
+void SymbolTableClass::VaribleNonExistent(std::string s)
 {
-	ERROR("Symbol: Error variable does not exist!");
+	ERROR("Symbol: Error variable: "<<s<<" does not exist!");
 	system("pause");
 	exit(0);
 }

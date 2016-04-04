@@ -1,20 +1,32 @@
 #include "Debug.h"
+#include "Test.h"
 #include "Token.h"
 #include "Scanner.h"
 #include "Symbol.h"
 #include "Node.h"
 #include "Parser.h"
 #include <iostream>
+#include <array>
 
 /* Commented out tests are fail and quit tests*/
 void testTokenClass()
 {
-	TEST("Print void token");
+	std::string unit = "TokenClass Unit Test";
 	TokenType tt = VOID_TOKEN;
 	std::string lexeme = "void";
 	TokenClass tok1(tt, lexeme, 0);
-	MSG(tok1);
+	UnitTest tc(unit);
+	tc.AddTest(Test("Token mType set and get.", tt==tok1.GetTokenType()));
+	tc.AddTest(Test("Token mLexeme set and get.", lexeme.compare(tok1.GetLexeme())==0));
+	tc.AddTest(Test("Token mLine set and get.", tok1.GetLineNumber()==0));
+	tc.AddTest(Test("Token GetTypeString no input", lexeme.compare(tok1.GetTokenTypeName()) ));
+	tc.AddTest(Test("Token GetTypeString with input", tok1.GetTypeString(INT_TOKEN).compare("int") ));
+
+	//MSG(tok1);
+	
+	tc.Evaluate();
 };
+
 void testScannerClassWithBadInput()
 {
 	TEST("ScannerClass with bad input.");
@@ -23,74 +35,94 @@ void testScannerClassWithBadInput()
 	while(token2.GetTokenType() != ENDFILE_TOKEN)
 	{
 		token2 = scanner2.GetNextToken();
-		MSG(token2);
+		//MSG(token2);
 	};
 }
 void testScannerClass()
 {
-	TEST("ScannerClass with basic input.");
-	//ScannerClass scanner("basic_test.txt");
-	ScannerClass scanner("while_if_test.txt");
+	TEST("ScannerClass");
+	ScannerClass scanner("test.txt");
 	TokenClass token;
 	TokenClass t = scanner.PeekNextToken();
-	MSG(t);
+	//MSG(t);
 	while(token.GetTokenType() != ENDFILE_TOKEN)
 	{
 		token = scanner.GetNextToken();
-		MSG(token);
+		//MSG(token);
 	};
+	// test bad input
 	//testScannerClassWithBadInput();
 };
 void testSymbolTable()
 {
+	std::string unit = "SymbolTableClass Unit Test";
 	SymbolTableClass *Table = new SymbolTableClass;
-	//bool t1 = Table.Exists("");
-	std::string e1 = "entry1";
-	std::string e2 = "babby";
-	bool t2 = Table->Exists(e1);
+	UnitTest tc(unit);
 	
+	std::string e1 = "entry1";
+	// test nonexistant variable
+	// tc.AddTest(Test("Table set and get value.",(Table->GetValue(e1) == 5) ));
+	std::string e2 = "babby";
+	// Fail case
+	tc.AddTest(Test("Table entry exists: Faile case. ",!(Table->Exists(e1)) ));
+
 	Table->AddEntry(e1);
 	Table->AddEntry(e2);
-	bool t3 = Table->Exists(e1);
-	Table->SetValue(e1, 5);
-	
-	//int t4 = Table.GetValue(e1);
+	tc.AddTest(Test("Table entry exists.",(Table->Exists(e1)) ));
 
-	int t5 = Table->GetValue(e1);
-	int t6 = Table->GetIndex(e2);
+	Table->SetValue(e1,5);
+	tc.AddTest(Test("Table set and get value.",(Table->GetValue(e1) == 5) ));
+	tc.AddTest(Test("Table get index.",Table->GetIndex(e2) == 1 ));
 	
-	int t7 = Table->GetCount();
-	/*
-	MSG("0= "<<t2);
-	MSG("1= "<<t3);
-	MSG("5= "<<t5);
-	MSG("1= "<<t6);
-	MSG("2= "<<t7);
-	*/
-	MSG(t5<<" "<<t6);
-	if(!t2 && t3 && (t5==5) && (t6 ==1)&& (t7 == 2))
-	{
-		MSG("Passed symbol table tests!");
-	}
+	tc.AddTest(Test("Table get count.",Table->GetCount() == 2 ));
+	
+	tc.Evaluate();
 }
 
 void testNodeClasses()
 {
+	std::string unit = "NodeClasses Unit Test";
+	SymbolTableClass *Table = new SymbolTableClass;
+
+	UnitTest nc(unit);
+
 	int r = 20;
 	int l = 4;
-
-	std::string label = "myLabel";
-	/*
-	BlockNode;
-	StatementGroupNode;
-	StatementNode;
-	DeclarationStatementNode;
-	AssignmentStatementNode;
-	CoutStatementNode;
-	*/
-
 	IntegerNode *rhs = new IntegerNode(r);
 	IntegerNode *lhs = new IntegerNode(l);
+
+	nc.AddTest(Test("IntegerNode.", (rhs->Evaluate()==20) ));
+	IdentifierNode *sum = new IdentifierNode("sum", Table);
+	DeclarationStatementNode *dn = new DeclarationStatementNode(sum);
+	dn->Interpret();
+	nc.AddTest(Test("DeclarationStatementNode interpreted IdentifierNode adding to table.", Table->Exists("sum") ));
+	// +
+	PlusNode *pn =  new PlusNode(lhs, rhs);
+	nc.AddTest(Test("AddNode.",( pn->Evaluate()==24) ));
+	// Assignment and Cout Nodes need their own pointers to expression nodes for their destructors to work properly
+	AssignmentStatementNode *an = new AssignmentStatementNode(new IdentifierNode("sum", Table),new PlusNode(lhs, rhs));
+	an->Interpret();
+
+	nc.AddTest(Test("AssignmentStatementNode interpreted Assignmentnode seting value in table", (Table->GetValue("sum")==24) ));
+	CoutStatementNode *cn = new CoutStatementNode(new IdentifierNode("sum", Table));
+	MSG("Next line should be 24");
+	cn->Interpret();
+
+	StatementGroupNode * sg = new StatementGroupNode();	
+	sg->AddStatement(dn);
+	sg->AddStatement(an);
+	sg->AddStatement(cn);
+
+	BlockNode *bn = new BlockNode(sg);
+	ProgramNode * PN = new ProgramNode(bn);
+	
+	StartNode * sn = new StartNode(PN);
+	
+	// undo comments in Node.cpp to see working chain
+	delete sn;
+	delete rhs;
+	delete lhs;
+	delete Table;
 	/*
 	
 	MinusNode *mn = new MinusNode(lhs, rhs);
@@ -105,78 +137,31 @@ void testNodeClasses()
 	GreaterEqualNode *gen = new GreaterEqualNode(lhs, rhs);
 
 	EqualNode *en = new EqualNode(lhs,rhs);
-	NotEqualNode *nen = new NotEqualNode(lhs, rhs);
-
-	
+	NotEqualNode *nen = new NotEqualNode(lhs, rhs);	
 	*/
-	//IdendifierNode * sum = 
 	
+	nc.Evaluate();
 
-
-	SymbolTableClass *Table = new SymbolTableClass;
-	
-	IdentifierNode *sum = new IdentifierNode("sum", Table);
-	PlusNode *pn =  new PlusNode(lhs, rhs);
-
-	DeclarationStatementNode *dn = new DeclarationStatementNode(sum);
-
-	AssignmentStatementNode *an = new AssignmentStatementNode(sum,pn);
-
-	CoutStatementNode *cn = new CoutStatementNode(sum);
-
-	//ExpressionNode * ex = new IdentifierNode("sum", Table);
-
-	dn->Interpret();
-	an->Interpret();
-	cn->Interpret();
-
-	IdentifierNode *id = new IdentifierNode(label, Table);
-
-	CoutStatementNode *csn = new CoutStatementNode(rhs);
-	AssignmentStatementNode *asn = new AssignmentStatementNode(id, rhs);
-	DeclarationStatementNode *dsn = new DeclarationStatementNode(id);
-
-	StatementGroupNode * sg = new StatementGroupNode();	
-	sg->AddStatement(csn);
-	sg->AddStatement(asn);
-	sg->AddStatement(dsn);
-
-	BlockNode *bn = new BlockNode(sg);
-	ProgramNode * PN = new ProgramNode(bn);
-	
-	StartNode * sn = new StartNode(PN);
-	
-	delete sn;
-	delete id;
-	delete rhs;
-	delete lhs;
-	//delete Table;
 
 }
 
 void TestParser()
 {
-	TEST("ParserClass with basic input.");
-	//ScannerClass *Scanner = new ScannerClass("basic_test2.txt");
-	ScannerClass *Scanner = new ScannerClass("while_if_test.txt");
-	SymbolTableClass *Table = new SymbolTableClass;
-
-	ParserClass Parser(Scanner,Table);
+	TEST("ParserClass.");
+	ParserClass *Parser = new ParserClass(new ScannerClass("test.txt"),new SymbolTableClass);
 	
-	Parser.Start();
-	//delete Scanner;
-	//delete Table;
+	StartNode *ns = Parser->Start();
+	delete ns;
+	delete Parser;
 };
 
 void TestInterpreter(){
-	TEST("Intrepretre with basic input.");
-	//ScannerClass *Scanner = new ScannerClass("basic_test2.txt");
-	ScannerClass *Scanner = new ScannerClass("while_if_test.txt");
-	SymbolTableClass *Table = new SymbolTableClass;
-	ParserClass Parser(Scanner,Table);
-	
-	StartNode * root = Parser.Start();
+	TEST("Intrepreter.");
+	ParserClass *Parser = new ParserClass(new ScannerClass("test.txt"),new SymbolTableClass);
+	StartNode * root = Parser->Start();
 	root->Interpret();
+	delete root;
+	delete Parser;
 };
 int main()
 {
@@ -187,8 +172,8 @@ int main()
 	
 	testSymbolTable();
 	testNodeClasses();
-	TestParser();
-	TestInterpreter();
+	//TestParser();
+	//TestInterpreter();
 	system("pause");
 	
 	return 0;

@@ -66,6 +66,7 @@
     <ClInclude Include="Scanner.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Symbol.h" />
+    <ClInclude Include="Test.h" />
     <ClInclude Include="Token.h" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +76,7 @@
     <ClCompile Include="Scanner.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Symbol.cpp" />
+    <ClCompile Include="Test.cpp" />
     <ClCompile Include="Token.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

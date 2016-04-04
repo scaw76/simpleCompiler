@@ -29,10 +29,6 @@ int TokenClass::GetLineNumber() const
 {
 	return mLineNumber;
 };
-const std::string TokenClass::GetTypeString()
-{
-	return GetTokenTypeName();
-};
 const std::string TokenClass::GetTypeString(TokenType type)
 {
 	return gTokenTypeNames[type];

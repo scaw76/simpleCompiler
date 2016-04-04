@@ -27,6 +27,9 @@ private:
 	WhileStatementNode * WhileStatement();
 
 	ExpressionNode * Expression();
+	ExpressionNode * And();
+	ExpressionNode * Or();
+	ExpressionNode * Relational();
 	ExpressionNode * PlusMinus();
 	ExpressionNode * TimesDivide();
 	ExpressionNode *  Factor();
