@@ -10,7 +10,7 @@ void main()
 
 	int sum; 
 	sum = 35 + 400; 
-	cout << sum; 
+	//cout << sum; 
 
 
 	// + * - /
@@ -35,13 +35,13 @@ void main()
 	bool greaterequal;
 	greaterequal = 6>=5;
 	bool notequal;
-	notequal = 5!=6;
+	notequal = (5!=6);
 
 	// if while
 
 	int x;
 	x = 5;
-	if(sum > 400)
+	if(sum <= 400)
 	{
 		cout << sum; 
 	}
@@ -53,12 +53,14 @@ void main()
 		cout << x;
 		x = x-1;
 	}
+	if(x)
+		cout << x;
 	// && ||
-	if( (x>=5) && (400>sum) )
+	if( (x<=5) && (400<sum) )
 	{
 		cout << sum; 
 	}
-	if( (x) || (400>sum) )
+	if(  (400>sum) || (x!=5) )
 	{
 		cout << x; 
 	}

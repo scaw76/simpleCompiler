@@ -159,7 +159,8 @@ IfStatementNode::~IfStatementNode()
 void IfStatementNode::Interpret()
 {	
 	//MSG("IfStatementNode INTERPRET");
-	if(mExpressionNode->Evaluate());
+	//MSG("Here " <<mExpressionNode->Evaluate() );
+	if(mExpressionNode->Evaluate())
 		mStatementGroupNode->Interpret();
 };
 

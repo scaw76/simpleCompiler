@@ -165,15 +165,15 @@ void TestInterpreter(){
 };
 int main()
 {
+	if(0)
+		MSG(" 0= ");
 
-	testTokenClass();
-
-	testScannerClass();	
-	
-	testSymbolTable();
-	testNodeClasses();
+	//testTokenClass();
+	//testScannerClass();		
+	//testSymbolTable();
+	//testNodeClasses();
 	//TestParser();
-	//TestInterpreter();
+	TestInterpreter();
 	system("pause");
 	
 	return 0;
