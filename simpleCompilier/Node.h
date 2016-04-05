@@ -17,6 +17,7 @@ class AssignmentStatementNode;
 class CoutStatementNode;
 class IfStatementNode;
 class WhileStatementNode;
+class RepeatStatementNode;
 
 // does not derive from node
 class ExpressionNode;
@@ -119,6 +120,7 @@ public:
 private:
 	ExpressionNode * mExpressionNode;
 };
+// If
 class IfStatementNode : public StatementNode{
 public:
 	IfStatementNode(ExpressionNode* en, StatementGroupNode *sg);
@@ -128,6 +130,7 @@ private:
 	ExpressionNode * mExpressionNode;
 	StatementGroupNode * mStatementGroupNode;
 };
+//While
 class WhileStatementNode : public StatementNode{
 public:
 	WhileStatementNode(ExpressionNode* en, StatementGroupNode *sg);
@@ -137,6 +140,17 @@ private:
 	ExpressionNode * mExpressionNode;
 	StatementGroupNode * mStatementGroupNode;
 };
+// Repeat
+class RepeatStatementNode :public StatementNode{
+public:
+	RepeatStatementNode(ExpressionNode* en, StatementGroupNode *sg);
+	~RepeatStatementNode();
+	void Interpret();
+private:
+	ExpressionNode * mExpressionNode;
+	StatementGroupNode * mStatementGroupNode;
+};
+
 // DOES NODE DERIVED FROM NODE
 // Expression Node
 class ExpressionNode {

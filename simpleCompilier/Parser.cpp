@@ -81,6 +81,10 @@ StatementNode * ParserClass::Statement()
 	{
 		return WhileStatement();
 	}
+	else if(tt == REPEAT_TOKEN)
+	{
+		return RepeatStatement();
+	}
 	return NULL;
 	
 };
@@ -129,6 +133,7 @@ IfStatementNode * ParserClass::IfStatement()
 	Match(RPAREN_TOKEN);
 	TokenClass currentToken = mScanner->PeekNextToken();
 	TokenType tt = currentToken.GetTokenType();
+	// can have one line statement
 	if(tt==LCURLY_TOKEN)
 	{
 		Match(LCURLY_TOKEN);
@@ -160,6 +165,30 @@ WhileStatementNode * ParserClass::WhileStatement()
 	return new WhileStatementNode(ex, sg);
 	
 };
+RepeatStatementNode * ParserClass::RepeatStatement()
+{
+	Match(REPEAT_TOKEN);
+	Match(LPAREN_TOKEN);
+	ExpressionNode * ex = Expression();	
+	Match(RPAREN_TOKEN);
+	TokenClass currentToken = mScanner->PeekNextToken();
+	TokenType tt = currentToken.GetTokenType();
+	// can have one line statement
+	if(tt==LCURLY_TOKEN)
+	{
+		Match(LCURLY_TOKEN);
+		StatementGroupNode * sg = StatementGroup();
+		Match(RCURLY_TOKEN);
+		return new RepeatStatementNode(ex, sg);
+	}
+	else
+	{
+		StatementGroupNode * sg = new StatementGroupNode();
+		sg->AddStatement(Statement());
+		return new RepeatStatementNode(ex, sg);
+	}
+	
+};
 //<Identifier>-> IDENTIFIER IdentifierNode
 IdentifierNode * ParserClass::Identifier()
 {
@@ -185,6 +214,7 @@ TokenClass ParserClass::Match(TokenType expectedType)
 		std::cerr<<"Expected token type "<<
 			currentToken.GetTypeString(expectedType)<<
 			std::endl;
+		system("pause");
 		exit(1);
 	}
 

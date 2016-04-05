@@ -42,9 +42,9 @@ void main()
 	int x;
 	x = 5;
 	if(sum <= 400)
-	{
+	begin
 		cout << sum; 
-	}
+	end
 	if(x)
 		cout << x;
 	
@@ -57,12 +57,18 @@ void main()
 		cout << x;
 	// && ||
 	if( (x<=5) && (400<sum) )
-	{
+	begin
 		cout << sum; 
 	}
 	if(  (400>sum) || (x!=5) )
 	{
 		cout << x; 
+	end
+	int count;
+	count = 3;
+	repeat(count)
+	{
+		cout << 100;
+		count = count-1;
 	}
-
 };//

@@ -155,6 +155,7 @@ IfStatementNode::~IfStatementNode()
 {
 	//MSG("de-contruct IfStatementNode");
 	delete mExpressionNode;
+	delete mStatementGroupNode;
 };
 void IfStatementNode::Interpret()
 {	
@@ -175,6 +176,7 @@ WhileStatementNode::~WhileStatementNode()
 {
 	//MSG("de-contruct WhileStatementNode");
 	delete mExpressionNode;
+	delete mStatementGroupNode;
 };
 void WhileStatementNode::Interpret()
 {	
@@ -183,6 +185,27 @@ void WhileStatementNode::Interpret()
 	{
 		mStatementGroupNode->Interpret();
 		mExpressionNode->Evaluate();
+	}		
+};
+// While Statement Node
+RepeatStatementNode::RepeatStatementNode(ExpressionNode * en, StatementGroupNode *sg)
+	:StatementNode()
+{
+	mExpressionNode = en;
+	mStatementGroupNode = sg;
+};
+RepeatStatementNode::~RepeatStatementNode()
+{
+	//MSG("de-contruct WhileStatementNode");
+	delete mExpressionNode;
+	delete mStatementGroupNode;
+};
+void RepeatStatementNode::Interpret()
+{	
+	int i = mExpressionNode->Evaluate();
+	for(int x=0;x<i;x++)
+	{
+		mStatementGroupNode->Interpret();
 	}
 		
 };

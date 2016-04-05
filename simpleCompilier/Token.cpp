@@ -68,6 +68,18 @@ void TokenClass::CheckReserved()
 	{
 		mType = IF_TOKEN;
 	}
+	if(mLexeme.compare("begin")==0)
+	{
+		mType = LCURLY_TOKEN;
+	}
+	if(mLexeme.compare("end")==0)
+	{
+		mType = RCURLY_TOKEN;
+	}
+	if(mLexeme.compare("repeat")==0)
+	{
+		mType = REPEAT_TOKEN;
+	}
 };
 
 std::ostream & operator<<(std::ostream & out, const TokenClass & tc)
