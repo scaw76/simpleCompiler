@@ -43,12 +43,12 @@ void testScannerClass()
 	TEST("ScannerClass");
 	ScannerClass scanner("test.txt");
 	TokenClass token;
-	TokenClass t = scanner.PeekNextToken();
-	//MSG(t);
 	while(token.GetTokenType() != ENDFILE_TOKEN)
 	{
+		TokenClass t = scanner.PeekNextToken();
+		//MSG("Peeked at "<<t);
 		token = scanner.GetNextToken();
-		//MSG(token);
+		//MSG("Got "<<token);
 	};
 	// test bad input
 	//testScannerClassWithBadInput();
@@ -165,13 +165,10 @@ void TestInterpreter(){
 };
 int main()
 {
-	if(0)
-		MSG(" 0= ");
-
-	//testTokenClass();
+	testTokenClass();
 	//testScannerClass();		
-	//testSymbolTable();
-	//testNodeClasses();
+	testSymbolTable();
+	testNodeClasses();
 	//TestParser();
 	TestInterpreter();
 	system("pause");

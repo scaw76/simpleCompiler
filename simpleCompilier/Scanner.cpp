@@ -7,10 +7,11 @@
 #include "Debug.h"
 
 
-ScannerClass::ScannerClass(const std::string filename)
-	:mFin(filename),mLineNumber(1)
+ScannerClass::ScannerClass(const std::string filename):
+	mLineNumber(1)
 {
 	MSG("Initializing ScannerClass object");
+	mFin.open(filename,std::ios::binary);
 	if(!mFin){
 	ERROR("ScannerClass: Error opening file!");
 	system("pause");
@@ -67,14 +68,18 @@ TokenClass ScannerClass::GetNextToken()
 	TokenClass token(type, lexeme, mLineNumber);
 	return token;	
 };
+// look at next token
 TokenClass ScannerClass::PeekNextToken()
 {
 	int line = mLineNumber;
 	long position = mFin.tellg();
 	TokenClass T = this->GetNextToken();
-	if(mFin.eof())
+	if(!mFin)
+	{
 		mFin.clear();
+	}
 	mLineNumber = line;
+	//MSG(mLineNumber);
 	mFin.seekg(position);
 	return T;
 };

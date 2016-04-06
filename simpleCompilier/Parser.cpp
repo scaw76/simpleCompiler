@@ -63,6 +63,7 @@ StatementNode * ParserClass::Statement()
 	TokenType tt = currentToken.GetTokenType();
 	if(tt == INT_TOKEN || tt == BOOL_TOKEN)
 	{
+		//MSG("Peaked at token "<< currentToken);
 		return DeclarationStatement(tt);
 	}
 	else if(tt == IDENTIFIER_TOKEN )
@@ -208,8 +209,11 @@ IntegerNode * ParserClass::Integer()
 TokenClass ParserClass::Match(TokenType expectedType)
 {
 	TokenClass currentToken = mScanner->GetNextToken();
+	//MSG("got Token "<<currentToken);
 	TokenType tt = currentToken.GetTokenType();
-	if(currentToken.GetTokenType() != expectedType){
+	
+	if(currentToken.GetTokenType() != expectedType)
+	{
 		std::cerr<<"Error in ParserClass::Match. "<<std::endl;
 		std::cerr<<"Expected token type "<<
 			currentToken.GetTypeString(expectedType)<<
