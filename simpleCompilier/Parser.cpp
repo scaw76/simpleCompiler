@@ -80,6 +80,10 @@ StatementNode * ParserClass::Statement()
 	}
 	else if(tt == WHILE_TOKEN)
 	{
+		if(currentToken.GetLexeme() == "do")
+		{
+			return DoWhileStatement();
+		}
 		return WhileStatement();
 	}
 	else if(tt == REPEAT_TOKEN)
@@ -166,6 +170,32 @@ WhileStatementNode * ParserClass::WhileStatement()
 	return new WhileStatementNode(ex, sg);
 	
 };
+WhileStatementNode * ParserClass::DoWhileStatement()
+{
+	Match(WHILE_TOKEN);
+	StatementGroupNode * sg;
+	TokenClass currentToken = mScanner->PeekNextToken();
+	TokenType tt = currentToken.GetTokenType();
+	// can have one line statement
+	if(tt==LCURLY_TOKEN)
+	{
+		Match(LCURLY_TOKEN);
+		sg = StatementGroup();
+		Match(RCURLY_TOKEN);
+	}
+	else
+	{
+		sg = new StatementGroupNode();
+		sg->AddStatement(Statement());
+	}
+	Match(WHILE_TOKEN);
+	Match(LPAREN_TOKEN);
+	ExpressionNode * ex = Expression();	
+	Match(RPAREN_TOKEN);
+	Match(SEMICOLON_TOKEN);
+	return new WhileStatementNode(ex, sg);
+	
+}
 RepeatStatementNode * ParserClass::RepeatStatement()
 {
 	Match(REPEAT_TOKEN);

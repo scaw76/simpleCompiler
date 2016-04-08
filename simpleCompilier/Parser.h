@@ -25,6 +25,7 @@ private:
 	CoutStatementNode * CoutStatement();
 	IfStatementNode * IfStatement();
 	WhileStatementNode * WhileStatement();
+	WhileStatementNode * DoWhileStatement();
 	RepeatStatementNode *RepeatStatement();
 
 	ExpressionNode * Expression();

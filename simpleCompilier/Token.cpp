@@ -80,6 +80,11 @@ void TokenClass::CheckReserved()
 	{
 		mType = REPEAT_TOKEN;
 	}
+	if(mLexeme.compare("do")==0)
+	{
+		mType = WHILE_TOKEN;
+	}
+
 };
 
 std::ostream & operator<<(std::ostream & out, const TokenClass & tc)

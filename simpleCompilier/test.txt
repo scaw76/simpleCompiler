@@ -1,74 +1,23 @@
 void main()
 { 
 
-	/* 
-	*
-	Test a block //comment*
-	**/
-	// tEST SINGLE // line comment */
-	// test +-*/
-
 	int sum; 
 	sum = 35 + 400; 
-	//cout << sum; 
-
-
-	// + * - /
-
-	int subtract;
-	subtract = 40-2;
-	int times;
-	times = 5*5;
-	int divide;
-	divide = 25/5;
-
-	// test <  > == <= >= !=
-
-	bool less;
-	less = 5 < 40;
-	bool greater;
-	greater = 40 > 5;
-	bool equal;
-	equal = 5==5;
-	bool lessequal;
-	lessequal = 5<=6;
-	bool greaterequal;
-	greaterequal = 6>=5;
-	bool notequal;
-	notequal = (5!=6);
-
-	// if while
-
-	int x;
-	x = 5;
-	if(sum <= 400)
-	begin
-		cout << sum; 
-	end
-	if(x)
-		cout << x;
+	cout << sum; 
 	
-	while( x>0 )
+	int x;
+	x = 0;
+	do
+		x = x+1;
+	while(x<5);
+	
+	cout<<x;
+	
+	do
 	{
-		cout << x;
-		x = x-1;
+		x = x+1;
+		cout<<x;
 	}
-	if(x)
-		cout << x;
-	// && ||
-	if( (x<=5) && (400<sum) )
-	begin
-		cout << sum; 
-	}
-	if(  (400>sum) || (x!=5) )
-	{
-		cout << x; 
-	end
-	int count;
-	count = 3;
-	repeat(count)
-	{
-		cout << 100;
-		count = count-1;
-	}
-};//
+	while(x<10);
+	
+};  
