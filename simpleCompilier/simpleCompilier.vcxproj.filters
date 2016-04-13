@@ -39,6 +39,9 @@
     <ClInclude Include="Test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Instructions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Token.cpp">
@@ -65,5 +68,12 @@
     <ClCompile Include="Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Instructions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="basic_test_bad.txt" />
+    <None Include="test.txt" />
   </ItemGroup>
 </Project>

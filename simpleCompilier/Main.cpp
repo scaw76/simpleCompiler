@@ -19,8 +19,12 @@ void testTokenClass()
 	tc.AddTest(Test("Token mType set and get.", tt==tok1.GetTokenType()));
 	tc.AddTest(Test("Token mLexeme set and get.", lexeme.compare(tok1.GetLexeme())==0));
 	tc.AddTest(Test("Token mLine set and get.", tok1.GetLineNumber()==0));
-	tc.AddTest(Test("Token GetTypeString no input", lexeme.compare(tok1.GetTokenTypeName()) ));
-	tc.AddTest(Test("Token GetTypeString with input", tok1.GetTypeString(INT_TOKEN).compare("int") ));
+	//MSG((tok1.GetTokenTypeName()));
+	//MSG(lexeme.compare(tok1.GetTokenTypeName()));
+	tc.AddTest(Test("Token GetTypeString no input", lexeme.compare(tok1.GetTokenTypeName())>0 ));
+	//MSG(tok1.GetTypeString(INT_TOKEN));
+	//MSG(tok1.GetTypeString(INT_TOKEN).compare("int"));
+	tc.AddTest(Test("Token GetTypeString with input", tok1.GetTypeString(INT_TOKEN).compare("int")<0));
 
 	//MSG(tok1);
 	

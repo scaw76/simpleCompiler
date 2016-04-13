@@ -61,6 +61,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="Instructions.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Scanner.h" />
@@ -70,6 +71,7 @@
     <ClInclude Include="Token.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Instructions.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Parser.cpp" />
@@ -78,6 +80,10 @@
     <ClCompile Include="Symbol.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="Token.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="basic_test_bad.txt" />
+    <None Include="test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
