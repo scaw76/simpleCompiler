@@ -119,8 +119,8 @@ void DeclarationStatementNode::Interpret()
 };
 void DeclarationStatementNode::Code(InstructionsClass & machine)
 {
-	// declare variable?
-	mIdentifierNode->CodeEvaluate(machine);
+	// declare variable
+	mIdentifierNode->DeclareVariable();
 };
 
 // Assignment Statement Node
@@ -287,6 +287,7 @@ int IntegerNode::Evaluate()
 };
 void IntegerNode::CodeEvaluate(InstructionsClass &machine)
 {
+	MSG("push value: "<<mInteger);
 	machine.PushValue(mInteger);
 };
 
@@ -322,6 +323,7 @@ int IdentifierNode::GetIndex()
 void IdentifierNode::CodeEvaluate(InstructionsClass &machine)
 {
 	machine.PushVariable(GetIndex());
+	MSG("push variable index: "<< GetIndex());
 };
 std::string IdentifierNode::GetLabel()
 {
@@ -358,10 +360,12 @@ PlusNode::~PlusNode()
 	return left + right;
 };
 void PlusNode::CodeEvaluate(InstructionsClass &machine)
-{
+{	
 	mLeft->CodeEvaluate(machine);
 	mRight->CodeEvaluate(machine);
+	MSG("pop pop add push: ");
 	machine.PopPopAddPush();
+	
 };
 
 // Minus Node

@@ -167,14 +167,32 @@ void TestInterpreter(){
 	delete root;
 	delete Parser;
 };
+
+void TestInstructions(){
+	TEST("InstructionsClass.");
+	ParserClass *Parser = new ParserClass(new ScannerClass("test.txt"),new SymbolTableClass);
+	StartNode * root = Parser->Start();
+
+	InstructionsClass instructions= InstructionsClass();
+	root->Code(instructions);
+
+	instructions.PrintAllMachineCodes();
+	instructions.Finish();
+	instructions.Execute();
+	
+	delete root;
+	delete Parser;
+}
 int main()
 {
-	testTokenClass();
+	//testTokenClass();
 	//testScannerClass();		
-	testSymbolTable();
-	testNodeClasses();
+	//testSymbolTable();
+	//testNodeClasses();
 	//TestParser();
-	TestInterpreter();
+	//TestInterpreter();
+	TestInstructions();
+
 	system("pause");
 	
 	return 0;

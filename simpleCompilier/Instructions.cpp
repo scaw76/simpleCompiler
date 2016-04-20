@@ -63,7 +63,7 @@ void InstructionsClass::Encode(unsigned char c)
 
 void InstructionsClass::Encode(int x)
 {
-	if( (mCurrent+4) < MAX_INSTRUCTIONS)
+	if( (mCurrent) < MAX_INSTRUCTIONS)
 	{
 		*((int*)(&(mCode [mCurrent] ))) = x;
 		mCurrent += 4;
@@ -78,7 +78,7 @@ void InstructionsClass::Encode(int x)
 
 void InstructionsClass::Encode(long long x)
 {
-	if( (mCurrent+8) < MAX_INSTRUCTIONS)
+	if( (mCurrent) < MAX_INSTRUCTIONS)
 	{
 		*((long long*)(&(mCode [mCurrent] ))) = x;
 		mCurrent += 8;
