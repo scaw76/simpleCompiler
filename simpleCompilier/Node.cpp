@@ -179,6 +179,7 @@ void CoutStatementNode::Code(InstructionsClass & machine)
 {
 	mExpressionNode->CodeEvaluate(machine);
 	machine.PopAndWrite();
+	machine.WriteEndl();
 };
 
 // If Statement Node
@@ -201,13 +202,17 @@ void IfStatementNode::Interpret()
 	if(mExpressionNode->Evaluate())
 		mStatementGroupNode->Interpret();
 };
-/**** NEED TO FIGURE OUT **********************************/
 void IfStatementNode::Code(InstructionsClass & machine)
 {
-	//if
 	mExpressionNode->CodeEvaluate(machine);
-	//then
+	unsigned char *index = machine.SkipIfZeroStack();	
+
+	unsigned char *a1 = machine.GetAddress();
 	mStatementGroupNode->Code(machine);
+
+	unsigned char *a2 = machine.GetAddress();
+	machine.SetOffset(index, a2-a1);
+
 };
 
 // While Statement Node
@@ -234,12 +239,18 @@ void WhileStatementNode::Interpret()
 };
 void WhileStatementNode::Code(InstructionsClass & machine)
 {
-	//WHILE
+	unsigned char *a0 = machine.GetAddress();
 	mExpressionNode->CodeEvaluate(machine);
-	// THEN
-	mStatementGroupNode->Code(machine);
-	mExpressionNode->CodeEvaluate(machine);
+	unsigned char *index = machine.SkipIfZeroStack();	
 
+	unsigned char *a1 = machine.GetAddress();
+	mStatementGroupNode->Code(machine);
+
+	unsigned char *start = machine.Jump();
+	unsigned char *a2 = machine.GetAddress();
+
+	machine.SetOffset(index, a2-a1);
+	machine.SetOffset(start, a0-a2);
 };
 
 // Repeat Statement Node
@@ -263,12 +274,9 @@ void RepeatStatementNode::Interpret()
 		mStatementGroupNode->Interpret();
 	}		
 };
+// Not required to implement
 void RepeatStatementNode::Code(InstructionsClass & machine)
-{	
-	mExpressionNode->CodeEvaluate(machine);
-	// execute that many times
-		mStatementGroupNode->Code(machine);
-};
+{};
 
 // Integer Node
 IntegerNode::IntegerNode(int i)
@@ -287,7 +295,7 @@ int IntegerNode::Evaluate()
 };
 void IntegerNode::CodeEvaluate(InstructionsClass &machine)
 {
-	MSG("push value: "<<mInteger);
+	//MSG("push value: "<<mInteger);
 	machine.PushValue(mInteger);
 };
 
@@ -323,7 +331,7 @@ int IdentifierNode::GetIndex()
 void IdentifierNode::CodeEvaluate(InstructionsClass &machine)
 {
 	machine.PushVariable(GetIndex());
-	MSG("push variable index: "<< GetIndex());
+	//MSG("push variable index: "<< GetIndex());
 };
 std::string IdentifierNode::GetLabel()
 {

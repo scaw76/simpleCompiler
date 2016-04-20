@@ -1,6 +1,61 @@
 void main()
 {
-	int sum; 
-	sum = 35 + 400;
-	cout<<sum;
+	int add; 
+	add = 35 + 400;
+	cout << add;
+
+	int sub;
+	sub = 35 - 400;
+	cout << sub;
+
+	int mul; 
+	mul = 35 * 400;
+	cout << mul;
+
+	int div; 
+	div = 400 / 35;
+	cout << div;
+
+	int x;
+	x = 1;
+	int y;
+	y = 0;
+
+	// prints //
+
+	if(x==1)
+		cout<<x;
+	if(x>y)
+		cout<<x;
+	if(x>=y){
+		cout << x;
+		cout << add;
+	}
+	while(x<5){
+		x = x+1;
+		cout<< x ;
+	}
+	if(x || y)
+		cout << x;	
+	if(x && add)
+		cout << add;
+
+
+	// doesnt print //
+
+	if(x<y)
+		cout<<x;
+	if(x<=y){
+		cout << x;
+		cout << add;
+	}
+	if(y){
+		cout << y;
+		cout << x;
+	}
+	if(y && add)
+		cout << mul;
+	if(y || 0)
+		cout<<mul;
+
 };  
