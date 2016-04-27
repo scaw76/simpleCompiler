@@ -292,9 +292,9 @@ TokenClass ParserClass::Match(TokenType expectedType)
 		exit(1);
 	}
 
-	MSG("\tSuccessfully match Token Type: "<<
-		currentToken.GetTokenTypeName()<<". Lexeme: \""<<
-		currentToken.GetLexeme()<<"\"");
+	//MSG("\tSuccessfully match Token Type: "<<
+	//	currentToken.GetTokenTypeName()<<". Lexeme: \""<<
+	//	currentToken.GetLexeme()<<"\"");
 
 	return currentToken;
 };

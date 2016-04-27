@@ -169,10 +169,10 @@ void TestInterpreter(){
 	delete Parser;
 };
 
-void TestInstructions(){
+void TestInstructions(std::string filename){
 	TEST("InstructionsClass.");
 	//ParserClass *Parser = new ParserClass(new ScannerClass("test_cout.txt"),new SymbolTableClass);
-	ParserClass *Parser = new ParserClass(new ScannerClass("test_plus_minus_assignment.txt"),new SymbolTableClass);
+	ParserClass *Parser = new ParserClass(new ScannerClass(filename),new SymbolTableClass);
 	StartNode * root = Parser->Start();
 
 	InstructionsClass instructions= InstructionsClass();
@@ -193,7 +193,9 @@ int main()
 	//testNodeClasses();
 	//TestParser();
 	//TestInterpreter();
-	TestInstructions();
+	TestInstructions("test.txt");
+	TestInstructions("test_cout.txt");
+	TestInstructions("test_plus_minus_assignment.txt");
 
 	system("pause");
 	
