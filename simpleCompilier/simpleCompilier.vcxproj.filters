@@ -75,5 +75,7 @@
   <ItemGroup>
     <None Include="basic_test_bad.txt" />
     <None Include="test.txt" />
+    <None Include="test_cout.txt" />
+    <None Include="test_plus_minus_assignment.txt" />
   </ItemGroup>
 </Project>

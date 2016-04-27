@@ -94,12 +94,33 @@ StatementNode * ParserClass::Statement()
 	
 };
 //<AssignmentStatement>-> <Identifier> ASSIGNMENT <Expression> SEMICOLON
-AssignmentStatementNode * ParserClass::AssignmentStatement()
+StatementNode * ParserClass::AssignmentStatement()
 {
 	IdentifierNode * id = Identifier();
-	TokenClass token = Match(ASSIGNMENT_TOKEN);
-	ExpressionNode * ex = Expression();
-	AssignmentStatementNode * a = new AssignmentStatementNode(id, ex);
+	TokenClass currentToken = mScanner->PeekNextToken();
+	TokenType tt = currentToken.GetTokenType();
+	ExpressionNode * ex1;
+	ExpressionNode * ex2;
+	StatementNode *a;
+	// if += 
+	if(tt == PLUSEQUAL_TOKEN )
+	{
+		Match(PLUSEQUAL_TOKEN);
+		ex1 = Expression();
+		a = new PlusEqualStatementNode(id, ex1);
+	}
+	// if -=
+	else if(tt == MINUSEQUAL_TOKEN )
+	{
+		Match(MINUSEQUAL_TOKEN);
+		ex1 = Expression();
+		a=new MinusEqualStatementNode(id, ex1);
+	}
+	else if(tt == ASSIGNMENT_TOKEN){
+		TokenClass token = Match(ASSIGNMENT_TOKEN);
+		ex1 = Expression();
+		a = new AssignmentStatementNode(id, ex1);
+	}
 	Match(SEMICOLON_TOKEN);
 	return a;
 };
@@ -121,11 +142,30 @@ DeclarationStatementNode* ParserClass::DeclarationStatement(TokenType tt)
 //<CoutStatement>-> COUT INSERTION <Expression> SEMICOLON
 CoutStatementNode * ParserClass::CoutStatement()
 {
+	CoutStatementNode *co = new CoutStatementNode();
 	Match(COUT_TOKEN);
-	Match(INSERTION_TOKEN);
-	ExpressionNode * ex = Expression();	
+	TokenClass currentToken = mScanner->PeekNextToken();
+	TokenType tt = currentToken.GetTokenType();
+	while(tt == INSERTION_TOKEN){
+		ExpressionNode * ex;
+		Match(INSERTION_TOKEN);
+		currentToken = mScanner->PeekNextToken();
+		TokenType temp = currentToken.GetTokenType();
+		if(temp == ENDL_TOKEN)
+		{
+			Match(ENDL_TOKEN);
+			ex = 0;			
+		}
+		else
+		{
+			ex = Expression();		
+		}		
+		co->AddExpressionNode(ex);
+		currentToken = mScanner->PeekNextToken();
+		tt = currentToken.GetTokenType();
+	}
 	Match(SEMICOLON_TOKEN);
-	return new CoutStatementNode(ex);
+	return co;
 };
 /*<IfStatement>->	 IF LPAREN <Expression> RPAREN LCURLY <StatementGroup> RCURLY 
 				||	 IF LPAREN <Expression> RPAREN <Statement>  

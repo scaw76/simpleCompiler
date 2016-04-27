@@ -84,6 +84,10 @@ void TokenClass::CheckReserved()
 	{
 		mType = WHILE_TOKEN;
 	}
+	if(mLexeme.compare("endl")==0)
+	{
+		mType = ENDL_TOKEN;
+	}
 
 };
 

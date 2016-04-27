@@ -1,16 +1,9 @@
 #ifndef _DEBUG_H_
 #define _DEBUG_H_
 
-//#define ShowTests 0
+
 #define ShowMessages 1
 
-/*
-#if ShowTests == 1
-
-#else
-	
-#endif
-	*/
 #if ShowMessages == 1
 	#define ERROR(msg) std::cout<<"Error: " << msg<<std::endl
 	#define TEST(msg) std::cout<<"Test: " << msg<<std::endl

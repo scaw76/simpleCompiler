@@ -21,7 +21,7 @@ private:
 
 
 	DeclarationStatementNode* DeclarationStatement(TokenType tt);
-	AssignmentStatementNode * AssignmentStatement();
+	StatementNode * AssignmentStatement();
 	CoutStatementNode * CoutStatement();
 	IfStatementNode * IfStatement();
 	WhileStatementNode * WhileStatement();

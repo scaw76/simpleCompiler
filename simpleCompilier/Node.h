@@ -15,6 +15,7 @@ class StatementGroupNode;
 
 class DeclarationStatementNode;
 class AssignmentStatementNode;
+
 class CoutStatementNode;
 class IfStatementNode;
 class WhileStatementNode;
@@ -118,15 +119,38 @@ private:
 	IdentifierNode * mIdentifierNode;
 	ExpressionNode * mExpressionNode;
 };
+//	Plus equal Statement Node
+class PlusEqualStatementNode : public StatementNode{
+public:
+	PlusEqualStatementNode(IdentifierNode * id, ExpressionNode *en);
+	~PlusEqualStatementNode();
+	void Interpret();
+	void Code(InstructionsClass & machine);
+private:
+	IdentifierNode * mIdentifierNode;
+	ExpressionNode * mExpressionNode;
+};
+// Minus equal Statement Node
+class MinusEqualStatementNode : public StatementNode{
+public:
+	MinusEqualStatementNode(IdentifierNode * id, ExpressionNode *en);
+	~MinusEqualStatementNode();
+	void Interpret();
+	void Code(InstructionsClass & machine);
+private:
+	IdentifierNode * mIdentifierNode;
+	ExpressionNode * mExpressionNode;
+};
 // Cout Statement Node
 class CoutStatementNode : public StatementNode{
 public:
-	CoutStatementNode(ExpressionNode * en);
+	CoutStatementNode();
+	void AddExpressionNode(ExpressionNode * en);
 	~CoutStatementNode();
 	void Interpret();
 	void Code(InstructionsClass & machine);
 private:
-	ExpressionNode * mExpressionNode;
+	std::vector<ExpressionNode*> mExpressionNodes;
 };
 // If
 class IfStatementNode : public StatementNode{

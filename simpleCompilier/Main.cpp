@@ -108,7 +108,8 @@ void testNodeClasses()
 	an->Interpret();
 
 	nc.AddTest(Test("AssignmentStatementNode interpreted Assignmentnode seting value in table", (Table->GetValue("sum")==24) ));
-	CoutStatementNode *cn = new CoutStatementNode(new IdentifierNode("sum", Table));
+	CoutStatementNode *cn = new CoutStatementNode();
+	cn->AddExpressionNode(new IdentifierNode("sum", Table));
 	MSG("Next line should be 24");
 	cn->Interpret();
 
@@ -152,7 +153,7 @@ void testNodeClasses()
 void TestParser()
 {
 	TEST("ParserClass.");
-	ParserClass *Parser = new ParserClass(new ScannerClass("test.txt"),new SymbolTableClass);
+	ParserClass *Parser = new ParserClass(new ScannerClass("test_plus_minus_assignment.txt"),new SymbolTableClass);
 	
 	StartNode *ns = Parser->Start();
 	delete ns;
@@ -161,7 +162,7 @@ void TestParser()
 
 void TestInterpreter(){
 	TEST("Intrepreter.");
-	ParserClass *Parser = new ParserClass(new ScannerClass("test.txt"),new SymbolTableClass);
+	ParserClass *Parser = new ParserClass(new ScannerClass("test_plus_minus_assignment.txt"),new SymbolTableClass);
 	StartNode * root = Parser->Start();
 	root->Interpret();
 	delete root;
@@ -170,7 +171,8 @@ void TestInterpreter(){
 
 void TestInstructions(){
 	TEST("InstructionsClass.");
-	ParserClass *Parser = new ParserClass(new ScannerClass("test.txt"),new SymbolTableClass);
+	//ParserClass *Parser = new ParserClass(new ScannerClass("test_cout.txt"),new SymbolTableClass);
+	ParserClass *Parser = new ParserClass(new ScannerClass("test_plus_minus_assignment.txt"),new SymbolTableClass);
 	StartNode * root = Parser->Start();
 
 	InstructionsClass instructions= InstructionsClass();

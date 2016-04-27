@@ -26,6 +26,7 @@ StateMachineClass::StateMachineClass()
 
 	mLegalMoves[START_STATE][LETTER_CHAR] = IDENTIFIER_STATE;
 	mLegalMoves[IDENTIFIER_STATE][LETTER_CHAR] = IDENTIFIER_STATE;
+
 	// ( ) { } ;
 	mLegalMoves[START_STATE][LPAREN_CHAR] = LPAREN_STATE;
 	mLegalMoves[START_STATE][RPAREN_CHAR] = RPAREN_STATE;
@@ -37,6 +38,7 @@ StateMachineClass::StateMachineClass()
 	mLegalMoves[START_STATE][DIVIDE_CHAR] = DIVIDE_STATE;
 	mLegalMoves[START_STATE][MINUS_CHAR] = MINUS_STATE;
 	mLegalMoves[START_STATE][PLUS_CHAR] = PLUS_STATE;
+
 	// < > <= >= << 
 	mLegalMoves[START_STATE][LESS_CHAR] = LESS_STATE;
 	mLegalMoves[START_STATE][GREATER_CHAR] = GREATER_STATE;
@@ -46,10 +48,14 @@ StateMachineClass::StateMachineClass()
 	
 	mLegalMoves[LESS_STATE][LESS_CHAR] = INSERTION_STATE;
 	
-	// = == ! !=
+	// = ==
 	mLegalMoves[START_STATE][ASSIGNMENT_CHAR] = ASSIGNMENT_STATE;
 	mLegalMoves[ASSIGNMENT_STATE][ASSIGNMENT_CHAR] = EQUAL_STATE;
-	
+	// += -=
+	mLegalMoves[PLUS_STATE][ASSIGNMENT_CHAR] = PLUSEQUAL_STATE;	
+	mLegalMoves[MINUS_STATE][ASSIGNMENT_CHAR] = MINUSEQUAL_STATE;
+
+	// ! !=	
 	mLegalMoves[START_STATE][NEGATE_CHAR] = NEGATE_STATE;
 	mLegalMoves[NEGATE_STATE][ASSIGNMENT_CHAR] = NOTEQUAL_STATE;
 
@@ -133,7 +139,11 @@ StateMachineClass::StateMachineClass()
 	mCorrespondingTokenTypes[INSERTION_STATE] = INSERTION_TOKEN;
 	mCorrespondingTokenTypes[LESSEQUAL_STATE] = LESSEQUAL_TOKEN;	
 	mCorrespondingTokenTypes[GREATEREQUAL_STATE] = GREATEREQUAL_TOKEN;
-	mCorrespondingTokenTypes[ASSIGNMENT_STATE] = ASSIGNMENT_TOKEN;
+
+	mCorrespondingTokenTypes[ASSIGNMENT_STATE] = ASSIGNMENT_TOKEN;	
+	mCorrespondingTokenTypes[MINUSEQUAL_STATE] = MINUSEQUAL_TOKEN;
+	mCorrespondingTokenTypes[PLUSEQUAL_STATE] = PLUSEQUAL_TOKEN;
+
 	mCorrespondingTokenTypes[EQUAL_STATE] = EQUAL_TOKEN;
 	mCorrespondingTokenTypes[NOTEQUAL_STATE] = NOTEQUAL_TOKEN;
 
