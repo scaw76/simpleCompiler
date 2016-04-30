@@ -1,0 +1,18 @@
+void main()
+{
+	int x;
+	x = 15;
+	int y;
+	y = 20;	
+
+	cout<< x << y <<endl;
+
+	if(x<y)
+	{
+		int x;
+		x = 11;
+		y = 25;
+	}
+
+	cout<< x << y <<endl;
+};  

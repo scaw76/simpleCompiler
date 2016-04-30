@@ -24,7 +24,7 @@ void StartNode::Code(InstructionsClass & machine)
 };
 
 // Program Node
-ProgramNode::ProgramNode(BlockNode * bn)
+ProgramNode::ProgramNode(StatementNode * bn)
 {
 	mBlockNode = bn;
 };
@@ -44,10 +44,11 @@ void ProgramNode::Code(InstructionsClass & machine)
 };
 
 // Block Node
-BlockNode::BlockNode(StatementGroupNode * sg)
+BlockNode::BlockNode(StatementGroupNode * sg, SymbolTableClass * st)
 	:StatementNode()
 {
 	mStatementGroupNode = sg;
+	mSymbolTable = st;
 };
 BlockNode::~BlockNode()
 {
@@ -56,12 +57,17 @@ BlockNode::~BlockNode()
 };
 void BlockNode::Interpret()
 {
+	mSymbolTable->PushScope();
 	//MSG("BlockNode INTERPRET");
 	mStatementGroupNode->Interpret();
+	mSymbolTable->PopScope();
 };
 void BlockNode::Code(InstructionsClass & machine)
 {
+	//MSG("code block");
+	mSymbolTable->PushScope();
 	mStatementGroupNode->Code(machine);
+	mSymbolTable->PopScope();
 };
 
 // Statement Group Node
@@ -238,7 +244,7 @@ void CoutStatementNode::Interpret()
 	for(std::vector<ExpressionNode*>::iterator expression = mExpressionNodes.begin(); expression != mExpressionNodes.end(); expression++)
 	{	
 		if((*expression) != 0){
-			//MSG((*expression)->Evaluate());
+			MSG((*expression)->Evaluate());
 			(*expression)->Evaluate();
 		}		
 	}
@@ -260,24 +266,24 @@ void CoutStatementNode::Code(InstructionsClass & machine)
 };
 
 // If Statement Node
-IfStatementNode::IfStatementNode(ExpressionNode * en,  StatementGroupNode *sg)
+IfStatementNode::IfStatementNode(ExpressionNode * en,  StatementNode * sn)
 	:StatementNode()
 {
 	mExpressionNode = en;
-	mStatementGroupNode = sg;
+	mStatementNode = sn;
 };
 IfStatementNode::~IfStatementNode()
 {
 	//MSG("de-contruct IfStatementNode");
 	delete mExpressionNode;
-	delete mStatementGroupNode;
+	delete mStatementNode;
 };
 void IfStatementNode::Interpret()
 {	
 	//MSG("IfStatementNode INTERPRET");
 	//MSG("Here " <<mExpressionNode->Evaluate() );
 	if(mExpressionNode->Evaluate())
-		mStatementGroupNode->Interpret();
+		mStatementNode->Interpret();
 };
 void IfStatementNode::Code(InstructionsClass & machine)
 {
@@ -285,7 +291,7 @@ void IfStatementNode::Code(InstructionsClass & machine)
 	unsigned char *index = machine.SkipIfZeroStack();	
 
 	unsigned char *a1 = machine.GetAddress();
-	mStatementGroupNode->Code(machine);
+	mStatementNode->Code(machine);
 
 	unsigned char *a2 = machine.GetAddress();
 	machine.SetOffset(index, a2-a1);

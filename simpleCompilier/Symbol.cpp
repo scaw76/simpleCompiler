@@ -10,7 +10,9 @@ SymbolTableClass::~SymbolTableClass()
 // does symbol exists
 bool SymbolTableClass::Exists(std::string s)
 {
-	for(std::vector<Variable>::iterator it = mSymbolTable.begin(); it != mSymbolTable.end(); it++)
+	int index = mScoping[mScoping.size()-1];
+	//MSG(index);
+	for(std::vector<Variable>::reverse_iterator it = mSymbolTable.rbegin()+index; it != mSymbolTable.rend(); it++)
 	{
 		if(s.compare(it->mLabel) == 0)
 		{
@@ -36,7 +38,7 @@ void SymbolTableClass::AddEntry(std::string s)
 // get value from symbol in table
 int SymbolTableClass::GetValue(std::string s)
 {
-	for(std::vector<Variable>::iterator it = mSymbolTable.begin(); it != mSymbolTable.end(); it++)
+	for(std::vector<Variable>::reverse_iterator it = mSymbolTable.rbegin(); it != mSymbolTable.rend(); it++)
 	{
 		if(s.compare(it->mLabel) == 0)
 		{
@@ -45,11 +47,12 @@ int SymbolTableClass::GetValue(std::string s)
 		};
 	};
 	VaribleNonExistent(s);
+	return -1;
 };
 // set value for symbol in table
 void SymbolTableClass::SetValue(std::string s, int v)
 {
-	for(std::vector<Variable>::iterator it = mSymbolTable.begin(); it != mSymbolTable.end(); it++)
+	for(std::vector<Variable>::reverse_iterator it = mSymbolTable.rbegin(); it != mSymbolTable.rend(); it++)
 	{
 		if(s.compare(it->mLabel) == 0)
 		{
@@ -78,6 +81,24 @@ int SymbolTableClass::GetCount()
 {
 	return mSymbolTable.size();
 }
+// push scope: records how many variables you have right now
+void SymbolTableClass::PushScope()
+{
+	mScoping.push_back(mSymbolTable.size());
+};
+// pop scope
+void SymbolTableClass::PopScope()
+{
+	int index = mScoping[mScoping.size()-1];
+
+	while(mSymbolTable.size()>index)
+	{
+		mSymbolTable.pop_back();
+	}
+	mScoping.pop_back();
+	//mSymbolTable = sub(&mSymbolTable.begin,&mSymbolTable.begin+index);
+	
+};
 // nonexistant symbol print message and quit
 void SymbolTableClass::VaribleNonExistent(std::string s)
 {

@@ -15,7 +15,7 @@ public:
 private:
 	TokenClass Match(TokenType expectedType);
 	ProgramNode * Program();
-	BlockNode * Block();
+	StatementNode * Block();
 	StatementGroupNode * StatementGroup();
 	StatementNode * Statement();
 

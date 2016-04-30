@@ -1,0 +1,13 @@
+void main()
+{
+	int x;
+	x = 10;
+	
+	x -= 1;
+	cout<<x;
+	x += 5;
+	cout<<x;
+
+	
+
+};  

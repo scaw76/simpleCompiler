@@ -1,0 +1,6 @@
+void main()
+{
+	int add; 
+	add = 35 + 400;
+	cout << add;
+};

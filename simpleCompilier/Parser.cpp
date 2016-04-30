@@ -27,17 +27,20 @@ ProgramNode * ParserClass::Program()
 	Match(MAIN_TOKEN);
 	Match(LPAREN_TOKEN);
 	Match(RPAREN_TOKEN);
-	BlockNode *b = Block();
+	StatementNode *b = Block();
+	Match(SEMICOLON_TOKEN);
 	return new ProgramNode(b);
 };
 //<Block>->LCURY <StatementGroup> RCURLY
-BlockNode * ParserClass::Block()
+StatementNode * ParserClass::Block()
 {
 	Match(LCURLY_TOKEN);
 	StatementGroupNode * s = StatementGroup();
 	Match(RCURLY_TOKEN);
-	Match(SEMICOLON_TOKEN);
-	BlockNode * b = new BlockNode(s);
+	//Match(SEMICOLON_TOKEN);
+
+	StatementNode * b = new BlockNode(s, mSymbolTable);
+	
 	return b;
 };
 //<StatementGroup>-> <List of Statements> || ""
@@ -100,7 +103,6 @@ StatementNode * ParserClass::AssignmentStatement()
 	TokenClass currentToken = mScanner->PeekNextToken();
 	TokenType tt = currentToken.GetTokenType();
 	ExpressionNode * ex1;
-	ExpressionNode * ex2;
 	StatementNode *a;
 	// if += 
 	if(tt == PLUSEQUAL_TOKEN )
@@ -178,19 +180,18 @@ IfStatementNode * ParserClass::IfStatement()
 	Match(RPAREN_TOKEN);
 	TokenClass currentToken = mScanner->PeekNextToken();
 	TokenType tt = currentToken.GetTokenType();
-	// can have one line statement
+	
+	StatementNode * sn;
+	// can have one line statement or block
 	if(tt==LCURLY_TOKEN)
 	{
-		Match(LCURLY_TOKEN);
-		StatementGroupNode * sg = StatementGroup();
-		Match(RCURLY_TOKEN);
-		return new IfStatementNode(ex, sg);
+		sn = Block();
+		return new IfStatementNode(ex, sn);
 	}
 	else
 	{
-		StatementGroupNode * sg = new StatementGroupNode();
-		sg->AddStatement(Statement());
-		return new IfStatementNode(ex, sg);
+		sn = Statement();
+		return new IfStatementNode(ex, sn);
 	}
 	
 };
@@ -292,9 +293,9 @@ TokenClass ParserClass::Match(TokenType expectedType)
 		exit(1);
 	}
 
-	//MSG("\tSuccessfully match Token Type: "<<
-	//	currentToken.GetTokenTypeName()<<". Lexeme: \""<<
-	//	currentToken.GetLexeme()<<"\"");
+	MSG("\tSuccessfully match Token Type: "<<
+		currentToken.GetTokenTypeName()<<". Lexeme: \""<<
+		currentToken.GetLexeme()<<"\"");
 
 	return currentToken;
 };

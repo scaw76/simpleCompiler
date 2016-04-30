@@ -85,8 +85,10 @@
   <ItemGroup>
     <None Include="basic_test_bad.txt" />
     <None Include="test.txt" />
+    <None Include="test_basic.txt" />
     <None Include="test_cout.txt" />
     <None Include="test_plus_minus_assignment.txt" />
+    <None Include="test_scoping.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

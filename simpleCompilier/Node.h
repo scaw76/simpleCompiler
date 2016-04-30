@@ -30,6 +30,8 @@ class BinaryOperatorNode;
 
 class PlusNode;
 class MinusNode;
+class PlusEqualNode;
+class MinusEqualNode;
 class TimesNode;
 class DivideNode;
 class LessNode;
@@ -63,12 +65,12 @@ private:
 // Program Node
 class ProgramNode : Node{
 public:
-	ProgramNode(BlockNode * bn);
+	ProgramNode(StatementNode * bn);
 	~ProgramNode();
 	void Interpret();
 	void Code(InstructionsClass & machine);
 private:
-	BlockNode * mBlockNode;
+	StatementNode * mBlockNode;
 };
 // Statement Node
 class StatementNode : public Node{
@@ -77,14 +79,15 @@ public:
 	virtual ~StatementNode();
 };
 // Block Node
-class BlockNode : StatementNode {
+class BlockNode : public StatementNode {
 public:
-	BlockNode(StatementGroupNode * sg);
+	BlockNode(StatementGroupNode * sg, SymbolTableClass * st);
 	~BlockNode();
 	void Interpret();
 	void Code(InstructionsClass & machine);
 private:
 	StatementGroupNode * mStatementGroupNode;
+	SymbolTableClass * mSymbolTable;
 };
 // Statement Group Node
 class StatementGroupNode : Node {
@@ -155,13 +158,13 @@ private:
 // If
 class IfStatementNode : public StatementNode{
 public:
-	IfStatementNode(ExpressionNode* en, StatementGroupNode *sg);
+	IfStatementNode(ExpressionNode* en, StatementNode *sn);
 	~IfStatementNode();
 	void Interpret();
 	void Code(InstructionsClass & machine);
 private:
 	ExpressionNode * mExpressionNode;
-	StatementGroupNode * mStatementGroupNode;
+	StatementNode * mStatementNode;
 };
 //While
 class WhileStatementNode : public StatementNode{

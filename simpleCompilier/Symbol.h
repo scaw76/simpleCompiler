@@ -15,6 +15,10 @@ public:
 	void SetValue(std::string s, int v);
 	int GetIndex(std::string s);
 	int GetCount();	
+	// push scope: records how many variables you have right now
+	void PushScope();
+	// pop scope
+	void PopScope();
 private:
 	void VaribleNonExistent(std::string s);
 	struct Variable{
@@ -22,6 +26,7 @@ private:
 		int mValue;
 	};
 	std::vector<Variable> mSymbolTable;
+	std::vector<int> mScoping;
 };
 
 #endif // _SYMBOL_H_

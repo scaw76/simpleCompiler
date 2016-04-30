@@ -118,7 +118,7 @@ void testNodeClasses()
 	sg->AddStatement(an);
 	sg->AddStatement(cn);
 
-	BlockNode *bn = new BlockNode(sg);
+	BlockNode *bn = new BlockNode(sg, Table);
 	ProgramNode * PN = new ProgramNode(bn);
 	
 	StartNode * sn = new StartNode(PN);
@@ -160,18 +160,17 @@ void TestParser()
 	delete Parser;
 };
 
-void TestInterpreter(){
+void TestInterpreter(std::string filename){
 	TEST("Intrepreter.");
-	ParserClass *Parser = new ParserClass(new ScannerClass("test_plus_minus_assignment.txt"),new SymbolTableClass);
+	ParserClass *Parser = new ParserClass(new ScannerClass(filename),new SymbolTableClass);
 	StartNode * root = Parser->Start();
 	root->Interpret();
 	delete root;
 	delete Parser;
 };
 
-void TestInstructions(std::string filename){
+void MachineCode(std::string filename){
 	TEST("InstructionsClass.");
-	//ParserClass *Parser = new ParserClass(new ScannerClass("test_cout.txt"),new SymbolTableClass);
 	ParserClass *Parser = new ParserClass(new ScannerClass(filename),new SymbolTableClass);
 	StartNode * root = Parser->Start();
 
@@ -185,6 +184,19 @@ void TestInstructions(std::string filename){
 	delete root;
 	delete Parser;
 }
+void TestInstructionClass(){
+	InstructionsClass instructions= InstructionsClass();
+	/*
+	instructions.PushValue(5);
+	instructions.PushValue(3);
+	instructions.PopPopAddPush();
+	instructions.PopAndWrite();
+	*/
+	instructions.PrintAllMachineCodes();
+
+	instructions.Finish();
+	instructions.Execute();
+};
 int main()
 {
 	//testTokenClass();
@@ -192,10 +204,15 @@ int main()
 	//testSymbolTable();
 	//testNodeClasses();
 	//TestParser();
-	//TestInterpreter();
-	TestInstructions("test.txt");
-	TestInstructions("test_cout.txt");
-	TestInstructions("test_plus_minus_assignment.txt");
+	//TestInterpreter("test.txt");
+	//TestInterpreter("test_basic.txt");
+	//TestInterpreter("test_cout.txt");
+	//TestInterpreter("test_scoping.txt");
+	TestInstructionClass();
+	//MachineCode("test.txt");
+	//MachineCode("test_cout.txt");
+	//MachineCode("test_plus_minus_assignment.txt");
+	//MachineCode("test_scoping.txt");
 
 	system("pause");
 	
