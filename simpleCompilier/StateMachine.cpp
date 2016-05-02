@@ -54,9 +54,10 @@ StateMachineClass::StateMachineClass()
 	// = ==
 	mLegalMoves[START_STATE][ASSIGNMENT_CHAR] = ASSIGNMENT_STATE;
 	mLegalMoves[ASSIGNMENT_STATE][ASSIGNMENT_CHAR] = EQUAL_STATE;
-	// += -=
+	// += -= *=
 	mLegalMoves[PLUS_STATE][ASSIGNMENT_CHAR] = PLUSEQUAL_STATE;	
 	mLegalMoves[MINUS_STATE][ASSIGNMENT_CHAR] = MINUSEQUAL_STATE;
+	mLegalMoves[TIMES_STATE][ASSIGNMENT_CHAR] = TIMESEQUAL_STATE;
 
 	// ! !=	
 	mLegalMoves[START_STATE][NEGATE_CHAR] = NEGATE_STATE;
@@ -146,6 +147,7 @@ StateMachineClass::StateMachineClass()
 	mCorrespondingTokenTypes[ASSIGNMENT_STATE] = ASSIGNMENT_TOKEN;	
 	mCorrespondingTokenTypes[MINUSEQUAL_STATE] = MINUSEQUAL_TOKEN;
 	mCorrespondingTokenTypes[PLUSEQUAL_STATE] = PLUSEQUAL_TOKEN;
+	mCorrespondingTokenTypes[TIMESEQUAL_STATE] = TIMESEQUAL_TOKEN;
 
 	mCorrespondingTokenTypes[EQUAL_STATE] = EQUAL_TOKEN;
 	mCorrespondingTokenTypes[NOTEQUAL_STATE] = NOTEQUAL_TOKEN;

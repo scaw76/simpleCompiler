@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="basic_test_bad.txt" />
+    <None Include="finalTests.txt" />
     <None Include="test.txt" />
     <None Include="test_basic.txt" />
     <None Include="test_cout.txt" />

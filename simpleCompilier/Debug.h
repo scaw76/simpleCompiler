@@ -2,7 +2,7 @@
 #define _DEBUG_H_
 
 
-#define ShowMessages 1
+#define ShowMessages 0
 
 #if ShowMessages == 1
 	#define ERROR(msg) std::cout<<"Error: " << msg<<std::endl

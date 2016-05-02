@@ -79,5 +79,6 @@
     <None Include="test_plus_minus_assignment.txt" />
     <None Include="test_scoping.txt" />
     <None Include="test_basic.txt" />
+    <None Include="finalTests.txt" />
   </ItemGroup>
 </Project>

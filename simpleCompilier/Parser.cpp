@@ -109,6 +109,14 @@ StatementNode * ParserClass::AssignmentStatement()
 	TokenType tt = currentToken.GetTokenType();
 	ExpressionNode * ex1;
 	StatementNode *a;
+	// if *=
+	if(tt == TIMESEQUAL_TOKEN )
+	{
+		Match(TIMESEQUAL_TOKEN);
+		ex1 = Expression();
+		a = new TimesEqualStatementNode(id, ex1);
+	}
+
 	// if += 
 	if(tt == PLUSEQUAL_TOKEN )
 	{
@@ -132,7 +140,7 @@ StatementNode * ParserClass::AssignmentStatement()
 	return a;
 };
 //<DeclarationStatement>-> INT <Identifier> SEMICOLON
-DeclarationStatementNode* ParserClass::DeclarationStatement(TokenType tt)
+StatementNode* ParserClass::DeclarationStatement(TokenType tt)
 {
 	if(tt == INT_TOKEN)
 	{
@@ -143,6 +151,15 @@ DeclarationStatementNode* ParserClass::DeclarationStatement(TokenType tt)
 		TokenClass token = Match(BOOL_TOKEN);
 	}
 	IdentifierNode *id = Identifier();
+	TokenClass currentToken = mScanner->PeekNextToken();
+	TokenType tokentype = currentToken.GetTokenType();
+	if(tokentype == ASSIGNMENT_TOKEN)
+	{
+		Match(ASSIGNMENT_TOKEN);
+		ExpressionNode *en = Expression();
+		Match(SEMICOLON_TOKEN);
+		return new DeclareAndAssignStatementNode(id, en);
+	}
 	Match(SEMICOLON_TOKEN);
 	return new DeclarationStatementNode(id);
 };
@@ -294,10 +311,8 @@ TokenClass ParserClass::Match(TokenType expectedType)
 	
 	if(currentToken.GetTokenType() != expectedType)
 	{
-		std::cerr<<"Error in ParserClass::Match. "<<std::endl;
-		std::cerr<<"Expected token type "<<
-			currentToken.GetTypeString(expectedType)<<
-			std::endl;
+		ERROR(" in ParserClass::Match. ");
+		ERROR("Expected token type "<<currentToken.GetTypeString(expectedType));
 		//system("pause");
 		exit(1);
 	}

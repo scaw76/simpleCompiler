@@ -1,0 +1,58 @@
+void main()
+{
+	// #2
+
+	int x;
+	x = 2;
+	int y;
+	y = 3;
+
+	cout<< x << y <<endl;
+
+	while(x<30)
+	{
+		x *= y+1;
+		cout<< x << y <<endl;
+	}
+
+	cout << endl;
+	// #4
+	
+	x= 0;
+	y= 0;
+
+	if(x and y)
+		cout << x <<endl;
+	if(x or y)
+		cout << x << y <<endl;
+
+	x= 0;
+	y= 1;
+
+	if(x and y )
+		cout << x << endl;
+	if(x or y)
+		cout << x << y <<endl;
+
+	x= 1;
+	y= 0;
+
+	if(x and y)
+		cout << x <<endl;
+	if(x or y)
+		cout << x << y <<endl;
+
+	x= 1;
+	y= 1;
+
+	if(x and y)
+		cout << x <<endl;
+	if(x or y)
+		cout << x << y <<endl;
+
+	cout << endl;
+	// #3
+	int z = 100+1;
+	cout << z << endl;
+	
+};  

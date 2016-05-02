@@ -18,5 +18,5 @@ void main()
 	}
 
 	cout<< x << y << endl;
- 	cout<< z <<endl;
+ 	//cout<< z <<endl;
 };  

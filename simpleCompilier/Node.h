@@ -111,6 +111,17 @@ public:
 private:
 	IdentifierNode * mIdentifierNode;
 };
+// DeclareAndAssign Statement Node
+class DeclareAndAssignStatementNode : public StatementNode{
+public:
+	DeclareAndAssignStatementNode(IdentifierNode * id, ExpressionNode *en);
+	~DeclareAndAssignStatementNode();
+	void Interpret();
+	void Code(InstructionsClass & machine);
+private:
+	IdentifierNode * mIdentifierNode;
+	ExpressionNode * mExpressionNode;
+};
 // Assignment Statement Node
 class AssignmentStatementNode : public StatementNode{
 public:
@@ -138,6 +149,17 @@ class MinusEqualStatementNode : public StatementNode{
 public:
 	MinusEqualStatementNode(IdentifierNode * id, ExpressionNode *en);
 	~MinusEqualStatementNode();
+	void Interpret();
+	void Code(InstructionsClass & machine);
+private:
+	IdentifierNode * mIdentifierNode;
+	ExpressionNode * mExpressionNode;
+};
+//TimesEqualStatementNode
+class TimesEqualStatementNode : public StatementNode{
+public:
+	TimesEqualStatementNode(IdentifierNode * id, ExpressionNode *en);
+	~TimesEqualStatementNode();
 	void Interpret();
 	void Code(InstructionsClass & machine);
 private:

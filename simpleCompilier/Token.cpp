@@ -88,6 +88,14 @@ void TokenClass::CheckReserved()
 	{
 		mType = ENDL_TOKEN;
 	}
+	if(mLexeme.compare("and")==0)
+	{
+		mType = AND_TOKEN;
+	}
+	if(mLexeme.compare("or")==0)
+	{
+		mType = OR_TOKEN;
+	}
 
 };
 

@@ -208,12 +208,16 @@ int main()
 	//TestInterpreter("test.txt");
 	//TestInterpreter("test_basic.txt");
 	//TestInterpreter("test_cout.txt");
-	TestInterpreter("test_scoping.txt");
+	//TestInterpreter("test_scoping.txt");
+	
 	//TestInstructionClass();
 	//MachineCode("test.txt");
 	//MachineCode("test_cout.txt");
 	//MachineCode("test_plus_minus_assignment.txt");
 	//MachineCode("test_scoping.txt");
+	
+	TestInterpreter("finalTests.txt");
+	MachineCode("finalTests.txt");
 
 	//system("pause");
 	

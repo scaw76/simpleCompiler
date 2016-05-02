@@ -128,7 +128,33 @@ void DeclarationStatementNode::Code(InstructionsClass & machine)
 	//MSG("declare variable");
 	mIdentifierNode->DeclareVariable();
 };
+// DeclareAndAssignStatementNode
+DeclareAndAssignStatementNode::DeclareAndAssignStatementNode(IdentifierNode * id, ExpressionNode *en)
+{
+	mIdentifierNode = id;
+	mExpressionNode = en;
+};
+DeclareAndAssignStatementNode::~DeclareAndAssignStatementNode()
+{
+	delete mIdentifierNode;
+	delete mExpressionNode;
+};
+void DeclareAndAssignStatementNode::Interpret()
+{
+	mIdentifierNode->DeclareVariable();
+	int e = mExpressionNode->Evaluate();
+	//MSG(e);
+	mIdentifierNode->SetValue(e);
+	int x = mIdentifierNode->Evaluate();
 
+};
+void DeclareAndAssignStatementNode::Code(InstructionsClass & machine)
+{
+	mIdentifierNode->DeclareVariable();
+	mExpressionNode->CodeEvaluate(machine);
+	int index = mIdentifierNode->GetIndex();
+	machine.PopAndStore(index);
+};
 // Assignment Statement Node
 AssignmentStatementNode::AssignmentStatementNode(IdentifierNode * id, ExpressionNode *en)
 {
@@ -186,7 +212,7 @@ void PlusEqualStatementNode::Code(InstructionsClass & machine)
 	machine.PopAndStore(index);
 };
 
-// Assignment Statement Node
+// Minus Equal Statement Node
 MinusEqualStatementNode::MinusEqualStatementNode(IdentifierNode * id, ExpressionNode *en)
 {
 	mIdentifierNode = id;
@@ -212,6 +238,33 @@ void MinusEqualStatementNode::Code(InstructionsClass & machine)
 	mExpressionNode->CodeEvaluate(machine);
 	
 	machine.PopPopSubPush();
+	int index = mIdentifierNode->GetIndex();
+	machine.PopAndStore(index);
+};
+//TimesEqualStatementNode
+TimesEqualStatementNode::TimesEqualStatementNode(IdentifierNode * id, ExpressionNode *en)
+{
+	mIdentifierNode = id;
+	mExpressionNode = en;
+};
+TimesEqualStatementNode::~TimesEqualStatementNode()
+{
+	//MSG("de-contruct AssignmentStatementNode");
+	delete mIdentifierNode;
+	delete mExpressionNode;
+};
+void TimesEqualStatementNode::Interpret()
+{
+	int e = mExpressionNode->Evaluate();
+	int x = mIdentifierNode->Evaluate();
+	mIdentifierNode->SetValue(e*x);
+};
+void TimesEqualStatementNode::Code(InstructionsClass & machine)
+{
+	mIdentifierNode->CodeEvaluate(machine);
+	mExpressionNode->CodeEvaluate(machine);
+	
+	machine.PopPopMulPush();
 	int index = mIdentifierNode->GetIndex();
 	machine.PopAndStore(index);
 };
@@ -244,7 +297,7 @@ void CoutStatementNode::Interpret()
 	for(std::vector<ExpressionNode*>::iterator expression = mExpressionNodes.begin(); expression != mExpressionNodes.end(); expression++)
 	{	
 		if((*expression) != 0){
-			MSG((*expression)->Evaluate());
+			std::cout<<((*expression)->Evaluate())<<std::endl;
 			(*expression)->Evaluate();
 		}		
 	}
@@ -430,7 +483,7 @@ BinaryOperatorNode::BinaryOperatorNode(ExpressionNode * lhs, ExpressionNode * rh
 };
 BinaryOperatorNode::~BinaryOperatorNode()
 {
-	MSG("de-contruct BinaryOperatorNode"); 
+	//MSG("de-contruct BinaryOperatorNode"); 
 	delete mRight;
 	delete mLeft;
 };
@@ -441,7 +494,7 @@ PlusNode::PlusNode(ExpressionNode * lhs, ExpressionNode * rhs)
 {};
 PlusNode::~PlusNode()
 {
-	MSG("de-contruct PlusNode"); 
+	//MSG("de-contruct PlusNode"); 
 };
  int PlusNode::Evaluate()
 {
@@ -454,7 +507,7 @@ void PlusNode::CodeEvaluate(InstructionsClass &machine)
 {	
 	mLeft->CodeEvaluate(machine);
 	mRight->CodeEvaluate(machine);
-	MSG("pop pop add push: ");
+	//MSG("pop pop add push: ");
 	machine.PopPopAddPush();
 	
 };

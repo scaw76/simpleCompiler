@@ -20,7 +20,7 @@ private:
 	StatementNode * Statement();
 
 
-	DeclarationStatementNode* DeclarationStatement(TokenType tt);
+	StatementNode* DeclarationStatement(TokenType tt);
 	StatementNode * AssignmentStatement();
 	CoutStatementNode * CoutStatement();
 	IfStatementNode * IfStatement();
