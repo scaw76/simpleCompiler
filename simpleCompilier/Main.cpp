@@ -215,7 +215,7 @@ int main()
 	//MachineCode("test_plus_minus_assignment.txt");
 	//MachineCode("test_scoping.txt");
 
-	system("pause");
+	//system("pause");
 	
 	return 0;
 };

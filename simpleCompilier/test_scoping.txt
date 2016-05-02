@@ -12,7 +12,11 @@ void main()
 		int x;
 		x = 11;
 		y = 25;
+		int z;
+		z = 4;
+		cout<<z;
 	}
 
-	cout<< x << y <<endl;
+	cout<< x << y << endl;
+ 	cout<< z <<endl;
 };  
