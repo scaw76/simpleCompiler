@@ -5,7 +5,6 @@
 #include "Token.h"
 #include "StateMachine.h"
 #include "Debug.h"
-#include <cstring>
 #include <stdlib.h>
 
 
@@ -13,7 +12,7 @@ ScannerClass::ScannerClass(const std::string filename):
 	mLineNumber(1)
 {
 	MSG("Initializing ScannerClass object");
-	mFin.open(filename.c_str(),std::ios::binary);
+	mFin.open(filename,std::ios::binary);
 	if(!mFin){
 	ERROR("ScannerClass: Error opening file!");
 	system("pause");

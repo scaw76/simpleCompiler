@@ -1,4 +1,4 @@
-﻿Build started 4/27/2016 8:34:12 PM.
+﻿Build started 5/2/2016 11:00:46 AM.
      1>Project "U:\Documents\Visual Studio 2010\Projects\simpleCompiler\simpleCompilier\simpleCompilier.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\simpleCompilier.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -26,4 +26,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.08
+Time Elapsed 00:00:02.29

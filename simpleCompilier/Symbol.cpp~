@@ -1,7 +1,6 @@
 #include "Symbol.h"
 #include "Debug.h"
 #include <iostream>
-#include <stdlib.h>
 
 
 SymbolTableClass::SymbolTableClass()
